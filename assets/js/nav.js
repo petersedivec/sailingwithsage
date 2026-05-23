@@ -1,0 +1,212 @@
+/* ============================================================
+   SAGE SEDIVEC — nav.js
+   Injects shared nav + mobile hamburger + footer into every page.
+
+   Usage in every HTML file:
+     <div id="nav-placeholder"></div>   ← top of body
+     <div id="footer-placeholder"></div> ← bottom of body
+     <script src="/assets/js/nav.js"></script>
+   ============================================================ */
+
+/* ── Desktop nav ── */
+const NAV_HTML = `
+<nav>
+  <div class="nav-inner">
+
+    <!-- Logo: hidden on desktop, shown on mobile -->
+    <a class="nav-logo" href="/index.html">Sage Sedivec</a>
+
+    <!-- Desktop links -->
+    <ul class="nav-links">
+      <li data-page="home">
+        <a href="/index.html">Home</a>
+      </li>
+      <li data-page="music">
+        <a href="/music/index.html">Music <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="/music/songs/index.html">Songs</a>
+        </div>
+      </li>
+      <li data-page="books">
+        <a href="/books/index.html">Books <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="/books/the-emerald-jaguar/index.html">The Emerald Jaguar</a>
+        </div>
+      </li>
+      <li data-page="blog">
+        <a href="/blog/index.html">Blog</a>
+      </li>
+      <li data-page="events">
+        <a href="/events/index.html">Events</a>
+      </li>
+      <li data-page="support">
+        <a href="/support/index.html">Support</a>
+      </li>
+      <li data-page="about">
+        <a href="/about/index.html">About <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="/about/contact.html">Contact Me</a>
+          <a href="/about/qa.html">Q&amp;A</a>
+        </div>
+      </li>
+    </ul>
+
+    <button class="nav-search" aria-label="Search">🔍</button>
+
+    <!-- Hamburger button (mobile only) -->
+    <button class="hamburger" aria-label="Open menu" aria-expanded="false" id="hamburger-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</nav>
+
+<!-- Mobile slide-down menu -->
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+  <ul>
+    <li data-page="home">
+      <a href="/index.html">Home</a>
+    </li>
+    <li data-page="music">
+      <a href="/music/index.html">Music</a>
+      <ul class="mobile-sub">
+        <li><a href="/music/songs/index.html">Songs</a></li>
+      </ul>
+    </li>
+    <li data-page="books">
+      <a href="/books/index.html">Books</a>
+      <ul class="mobile-sub">
+        <li><a href="/books/the-emerald-jaguar/index.html">The Emerald Jaguar</a></li>
+      </ul>
+    </li>
+    <li data-page="blog">
+      <a href="/blog/index.html">Blog</a>
+    </li>
+    <li data-page="events">
+      <a href="/events/index.html">Events</a>
+    </li>
+    <li data-page="support">
+      <a href="/support/index.html">Support</a>
+    </li>
+    <li data-page="about">
+      <a href="/about/index.html">About</a>
+      <ul class="mobile-sub">
+        <li><a href="/about/contact.html">Contact Me</a></li>
+        <li><a href="/about/qa.html">Q&amp;A</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+`;
+
+/* ── Footer + newsletter ── */
+const FOOTER_HTML = `
+<section class="newsletter">
+  <h3>Stay in the <span>loop</span> 🎶</h3>
+  <p>New music, book updates, and ocean adventures — straight to your inbox.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="your@email.com" aria-label="Email address">
+    <button type="button">Subscribe</button>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">Sage Sedivec</span>
+  <ul class="footer-links">
+    <li><a href="https://www.instagram.com/songs.by.sage" target="_blank" rel="noopener">Instagram</a></li>
+    <li><a href="/music/index.html">Music</a></li>
+    <li><a href="/books/index.html">Books</a></li>
+    <li><a href="/about/contact.html">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© ${new Date().getFullYear()} Sage Sedivec</span>
+</footer>
+`;
+
+/* ── Inject nav ── */
+const navEl = document.getElementById('nav-placeholder');
+if (navEl) navEl.outerHTML = NAV_HTML;
+
+/* ── Inject footer ── */
+const footerEl = document.getElementById('footer-placeholder');
+if (footerEl) footerEl.outerHTML = FOOTER_HTML;
+
+/* ── Mark active nav item ── */
+(function markActive() {
+  const path = window.location.pathname;
+  const map = {
+    home:    ['/', '/index.html'],
+    music:   ['/music'],
+    books:   ['/books'],
+    blog:    ['/blog'],
+    events:  ['/events'],
+    support: ['/support'],
+    about:   ['/about'],
+  };
+
+  document.querySelectorAll('[data-page]').forEach(li => {
+    const key = li.dataset.page;
+    const matches = map[key] || [];
+    const active = matches.some(m => path === m || path.startsWith(m + '/'));
+    if (active) li.classList.add('active');
+  });
+})();
+
+/* ── Hamburger toggle ── */
+(function initHamburger() {
+  const btn    = document.getElementById('hamburger-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+  if (!btn || !mobileNav) return;
+
+  btn.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.setAttribute('aria-expanded', isOpen);
+    mobileNav.setAttribute('aria-hidden', !isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  /* Close menu when a link is tapped */
+  mobileNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+      mobileNav.setAttribute('aria-hidden', true);
+      document.body.style.overflow = '';
+    });
+  });
+
+  /* Close on outside tap */
+  document.addEventListener('click', e => {
+    if (!btn.contains(e.target) && !mobileNav.contains(e.target)) {
+      mobileNav.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    }
+  });
+})();
+
+/* ── Newsletter form ── */
+(function initNewsletter() {
+  const btn   = document.querySelector('.newsletter-form button');
+  const input = document.querySelector('.newsletter-form input');
+  if (!btn || !input) return;
+
+  btn.addEventListener('click', () => {
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.style.borderColor = 'var(--pink-dark)';
+      input.focus();
+      return;
+    }
+    /* TODO: replace with your Substack subscribe URL */
+    const url = `https://sagesedivec.substack.com/subscribe?email=${encodeURIComponent(email)}`;
+    window.open(url, '_blank');
+    input.value = '';
+    btn.textContent = '✓ Done!';
+    setTimeout(() => { btn.textContent = 'Subscribe'; }, 3000);
+  });
+})();

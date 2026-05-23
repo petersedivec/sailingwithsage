@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books — Sage Sedivec</title>
+  <meta name="description" content="Sage Sedivec's books — including The Emerald Jaguar, Book 1 of the Guardians of the Secret Isles fantasy series, written and published at age 13.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ── Books page layout ── */
+    .books-section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 72px 48px;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .books-section + .books-section {
+      padding-top: 0;
+    }
+
+    .books-section.divider {
+      border-top: 1.5px solid var(--pink-light);
+      padding-top: 64px;
+    }
+
+    .books-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(255, 105, 180, 0.2);
+    }
+
+    .books-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .books-text h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 48px;
+      color: var(--pink);
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    .books-text p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .books-text p:last-of-type {
+      margin-bottom: 32px;
+    }
+
+    .books-text em {
+      font-style: italic;
+      color: var(--pink-dark);
+      font-weight: 400;
+    }
+
+    /* Coming next cards */
+    .coming-next-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .coming-book {
+      background: var(--pink-pale);
+      border: 1.5px solid var(--pink-light);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .coming-book p {
+      margin-bottom: 0 !important;
+      font-size: 15px;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      .books-section {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 48px 24px;
+      }
+
+      .books-section + .books-section {
+        padding-top: 0;
+      }
+
+      .books-photo {
+        max-width: 340px;
+      }
+
+      .books-text h2 {
+        font-size: 38px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
+  <section class="hero-sm">
+    <h1 class="hero-name">Books</h1>
+    <p class="hero-tagline">Fantasy worlds built from real adventures</p>
+  </section>
+
+  <!-- ── INTRODUCTION ── -->
+  <section class="books-section">
+    <div class="books-photo">
+      <img
+        src="/assets/images/sage/sage-with-guardians-book.jpg"
+        alt="Sage holding her book Guardians of the Secret Isles">
+    </div>
+    <div class="books-text">
+      <h2>Introduction</h2>
+      <p>Writing is my favorite kind of passport. It lets me escape into worlds that belong completely to me, where anything can happen and usually does.</p>
+      <p>I draw inspiration from everywhere: the places I travel, the friendships that shape me, and the small moments that most people might miss. Every experience becomes part of a story.</p>
+      <p>I wrote my first book, <em>Guardians of the Secret Isles</em>, at eleven. I spent two years editing it, and published it at thirteen. That process showed me that creativity is powerful, but persistence is what turns imagination into reality.</p>
+      <p>There are many more stories ahead, and I can't wait to write them.</p>
+      <a class="btn-pink" href="/books/the-emerald-jaguar/index.html">
+        📖 Check out The Emerald Jaguar
+      </a>
+    </div>
+  </section>
+
+  <!-- ── WHAT'S COMING NEXT ── -->
+  <section class="books-section divider">
+    <div class="books-photo">
+      <img
+        src="/assets/images/sage/sage-ice-cream-door3.jpg"
+        alt="Sage with an ice cream cone">
+    </div>
+    <div class="books-text">
+      <h2>What's Coming Next?</h2>
+      <p>I always have a lot of books competing for attention in my mind, but this year there are three I'm working on.</p>
+      <div class="coming-next-list">
+        <div class="coming-book">
+          <p>The sequel to <em>Guardians of the Secret Isles</em>. It's the hardest book I've ever written — it took a year and a half just to finish the first draft, and there's still plenty of editing ahead.</p>
+        </div>
+        <div class="coming-book">
+          <p>A brand new series I co-wrote with one of my best friends. There's something special about creating a story with a person you love — building it together makes everything better, and I hope we keep writing side by side for a long time.</p>
+        </div>
+        <div class="coming-book">
+          <p><em>Apple Blossom Academy</em> — the only one with a set-in-stone title. I'm still in the middle of drafting this one, and it feels so refreshing to focus on writing again. I love editing, but there's something irreplaceable about writing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script src="/assets/js/nav.js"></script>
+</body>
+</html>
