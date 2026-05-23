@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q&A — Sage Sedivec</title>
+  <meta name="description" content="Questions and answers about Sage Sedivec — her music, books, creative process, and life on a sailboat in the Caribbean.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ── QA page layout ── */
+    .qa-page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 56px 48px 72px;
+    }
+
+    /* Category heading */
+    .qa-category {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 48px 0 20px;
+    }
+
+    .qa-category:first-of-type { margin-top: 0; }
+
+    .qa-category h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 36px;
+      color: var(--pink);
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .qa-category-line {
+      flex: 1;
+      height: 2px;
+      background: var(--pink-light);
+      border-radius: 2px;
+    }
+
+    /* Accordion item */
+    .qa-item {
+      border: 1.5px solid var(--pink-light);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+
+    .qa-item.open {
+      border-color: var(--pink);
+    }
+
+    /* Question button */
+    .qa-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--dark);
+      transition: background 0.15s;
+      line-height: 1.4;
+    }
+
+    .qa-q:hover { background: var(--pink-pale); }
+    .qa-item.open .qa-q { background: var(--pink-pale); color: var(--pink-dark); }
+
+    /* Chevron icon */
+    .qa-chevron {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--pink-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--pink-dark);
+      transition: transform 0.25s, background 0.2s;
+    }
+
+    .qa-item.open .qa-chevron {
+      transform: rotate(180deg);
+      background: var(--pink);
+      color: #fff;
+    }
+
+    /* Answer panel */
+    .qa-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.25s ease;
+      padding: 0 20px;
+    }
+
+    .qa-item.open .qa-a {
+      max-height: 1000px;
+      padding: 4px 20px 20px;
+    }
+
+    .qa-a p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .qa-a p:last-child { margin-bottom: 0; }
+
+    .qa-a em  { font-style: italic; color: var(--pink-dark); }
+    .qa-a strong { font-weight: 600; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .qa-page { padding: 40px 20px 56px; }
+      .qa-category h2 { font-size: 28px; }
+      .qa-q { font-size: 14px; padding: 14px 16px; }
+      .qa-item.open .qa-a { padding: 4px 16px 16px; }
+      .qa-a p { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
+  <section class="hero-sm">
+    <h1 class="hero-name">Q&amp;A</h1>
+    <p class="hero-tagline">Ask me anything — here are your answers</p>
+  </section>
+
+  <div class="qa-page">
+
+    <!-- ── ABOUT ME ───────────────────────────────────────── -->
+    <div class="qa-category">
+      <h2>About Me</h2>
+      <div class="qa-category-line"></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        How did you get started in music &amp; songwriting?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I wrote my first song when I was eight, during what I thought was the best friendship I'd ever had. That inspired me to write a song called Best Friends. I produced it with my piano teacher, but when we were almost done it was summer break — and when the break ended we'd both kind of forgotten about it.</p>
+        <p>After that I didn't write another song for a while. Then when I was eleven I went to karaoke with my friends and they sang You Belong With Me by Taylor Swift. I had no idea who Taylor Swift was. The song got stuck in my head, I looked it up, and from there I was sucked down the rabbit hole that is Taylor Swift. That inspired me to write.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What inspires your songwriting?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Honestly? Everything. Anytime something happens to me or to people around me, I write a song about it. A lot of the time I don't finish that song.</p>
+        <p>I also get inspiration in the strangest places. Like one day I was out skiing all day and got these lyrics stuck in my head with a really catchy melody. I skied ahead of my brothers and Dad, took off my glove, pulled my phone out of my pocket, and recorded a voice memo. As the day continued I kept getting more pieces until I had an entire song in like five or six voice memos. I still haven't put them together though...</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        Do you have any music or literary idols?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Yes! Absolutely! For writing it's Shannon Messenger and Rick Riordan — I love their work so much. I also admire Lisa McMann and Chris Colfer.</p>
+        <p>For music it's Taylor Swift. I also look up to my songwriting teacher, Paulina Jayne. I admire singer-songwriters Sloan Treacy, Gracie Abrams, and Chappell Roan, as well as Sabrina Carpenter.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What instruments do you play?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Acoustic guitar and piano. I learned piano when I was eight or nine and have continued to practice it. I learned guitar in September 2024 via Simply Guitar and finished the whole program in about a month. In January 2025, I started taking guitar lessons with my songwriting teacher Paulina.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your favorite song you've written?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>That is <em>really</em> difficult. It's normally the one I've most recently written. For a while, from late November 2024 to mid February 2025, my favorite was Best Friends. I loved it so much and loved performing it live.</p>
+        <p>In mid February I became addicted to playing Strangers live — it is such a fun song. I really love all my songs.</p>
+        <p>I can say this though: in all my songs, the outro is my favorite bit. The Lyla outro lyrics are just so perfect. I love how the Best Friends outro slows down then speeds up. The way the Soul Sisters outro fades out is gorgeous. All the outros are brilliant in their own way.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your creative process like?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>That is a very complicated question because the answer is always different.</p>
+      </div>
+    </div>
+
+    <!-- ── MUSIC ──────────────────────────────────────────── -->
+    <div class="qa-category">
+      <h2>Music</h2>
+      <div class="qa-category-line"></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        Do you write all your own music?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Yes — I have written or co-written all the songs I release.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your process behind writing a song?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>That is a really long answer — but luckily I'm writing a book about it! It's called <em>The Making of a Song</em>. There's no official release date yet but it is coming. Probably. I'm a little busy right now.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        Who is your biggest help in writing songs?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>In the actual writing it's Paulina (though she and I edit them together after I write them). But after the writing — when it comes to notating the melody, finding a tempo, etc — it's definitely my mom.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        Can fans expect any new music soon?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Unfortunately no — I've decided to take a break on producing music so I can make more of an effort to perform live.</p>
+      </div>
+    </div>
+
+    <!-- ── WRITING ─────────────────────────────────────────── -->
+    <div class="qa-category">
+      <h2>Writing</h2>
+      <div class="qa-category-line"></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What kinds of books do you write?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I write fantasy — it's always been my favorite genre. My books have lots of magic and adventure with death and battles and more.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        Do you have a favorite author?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Rick Riordan for <em>sure</em>. His writing is <strong>amazing</strong> and I could never <em>dream</em> of writing that well. His humor is impeccable and I'm laughing multiple times a page. I love how he makes me mad and happy and sad all at the same time. (Even if he does hold the record for the evilest cliffhanger ever at the end of The Mark of Athena.)</p>
+        <p>My second favorite is definitely Shannon Messenger.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        How long does it take you to write a book?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>It's different for every book. The first one I wrote took only two months to finish (it was 60,000 words back then).</p>
+        <p>My second book I started in late Jan/early Feb 2024 and as of Feb 2025 I still haven't finished it — it's currently around 50,000 words.</p>
+        <p>The other book I started in September 2024 and finished in January 2025. It's around 42,000 words.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        Do you read a lot yourself?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I used to read all the time — I could read 400-page KotLC books in one night. I was a master of rereading though; I almost never read new books and I love noticing new things on a reread.</p>
+        <p>These days I don't read as much because of how busy I am with writing and music. I really wish I could read more though.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your daily writing routine like?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I don't really have one. If I feel like writing I can write for hours on end. If not, I can sometimes write no more than two sentences.</p>
+        <p>I also don't try to force it. If there's no spark when I sit down to write, I'll just get up and do something else.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your favorite part of writing a book?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Hmm, I'm not sure I have one. I really enjoy finally reaching the end of the book, but the beginnings are definitely the easiest.</p>
+      </div>
+    </div>
+
+    <!-- ── PERSONAL ────────────────────────────────────────── -->
+    <div class="qa-category">
+      <h2>Personal</h2>
+      <div class="qa-category-line"></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What do you do when you're not writing or making music?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>A lot of things! I love to swim and hang out with my friends. Every morning when I wake up I go straight to check my messages because that's when everyone is texting.</p>
+        <p>I like to read when I have time and I knit sometimes. I'll often multitask — listen to an audiobook and do a coloring page at the same time.</p>
+        <p>Sometimes I'll do Aerial Silks from the mast of the boat! I enjoy playing games like Catan Junior, Ticket to Ride, Sleeping Queens, and Exploding Kittens.</p>
+        <p>I love baking and make cookies several days a week. My specialties are soups and <em>stews</em> (especially beef and bean chili). I don't watch many movies and play even fewer video games — almost all my time on devices is spent working. I'm also not allowed on social media.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What advice do you have for aspiring authors and musicians?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p><strong>Write. Just Write.</strong> I think people are right when they say just write. If you're going to be a musician, make sure you can play an instrument. Write your songs and practice performing them. Practice. Practice. Practice. Practice. Practice.</p>
+        <p>If you want to be an author, just write your book. Write it until it's done. Just finish the first draft — then you can edit it. As I tell my friend who is <em>insisting</em> on rewriting her whole book: you can rewrite the whole book <em>later</em>. When you're done you <em>need</em> to edit it. Get your friends to read it. Delete and add entire chapters. Do whatever. Just don't do that until AFTER you finish draft 1.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What are some things you dislike doing?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I <em>hate</em> math. HATE it. I don't enjoy hiking (unless it's with friends) or going on walks. There's more but I can't seem to think of it right now...</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        How do you balance school with being an artist and author?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I don't have much schoolwork — that's the answer. I'm homeschooled and pretty much only have two subjects. I have a math curriculum (ugg, that has to be the one subject) and I do Duolingo (I'm very passionate about it — top 1% learner in 2024 and top 2% in 2023).</p>
+        <p>On most days that takes about thirty minutes, so I have the rest of the day to work and do what I want.</p>
+      </div>
+    </div>
+
+    <!-- ── FUN / ENGAGING ─────────────────────────────────── -->
+    <div class="qa-category">
+      <h2>Fun Stuff</h2>
+      <div class="qa-category-line"></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your favorite song to perform?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Strangers. Absolutely. I don't know why but it is <em>such</em> a fun song to play — I love the buildup, the strumming, the energy, and everything really.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your favorite food?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>That's really difficult. I <em>love</em> bean and cheese burritos. I find most soups really good. I am <em>way</em> over obsessed with the Tesco white sourdough loaf. I also love my chocolate chip cookies and my favorite ice cream is mint chocolate chip.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        If you could have any superpower, what would it be?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>I would want to control water. There is not even a doubt on my mind.</p>
+      </div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        What's your favorite color?
+        <span class="qa-chevron">▾</span>
+      </button>
+      <div class="qa-a">
+        <p>Purple! Turquoise! Silver!</p>
+      </div>
+    </div>
+
+  </div><!-- /qa-page -->
+
+  <div id="footer-placeholder"></div>
+  <script src="/assets/js/nav.js"></script>
+
+  <script>
+    /* Accordion toggle */
+    document.querySelectorAll('.qa-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item    = btn.closest('.qa-item');
+        const isOpen  = item.classList.contains('open');
+
+        /* Close all open items */
+        document.querySelectorAll('.qa-item.open').forEach(el => {
+          el.classList.remove('open');
+          el.querySelector('.qa-q').setAttribute('aria-expanded', 'false');
+        });
+
+        /* Open clicked item (unless it was already open) */
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

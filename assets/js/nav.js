@@ -8,6 +8,25 @@
      <script src="/assets/js/nav.js"></script>
    ============================================================ */
 
+/* ── Sage's age — auto-updates every May 1 ──────────────────
+   Born May 1, 2012. Age increments each May 1.
+   Usage in HTML: <span class="sage-age"></span>
+   ---------------------------------------------------------- */
+function getSageAge() {
+  const now       = new Date();
+  const birthYear = 2012;
+  const MAY       = 4; // 0-indexed: Jan=0, May=4
+  const birthday  = new Date(now.getFullYear(), MAY, 1);
+  const age       = now.getFullYear() - birthYear - (now < birthday ? 1 : 0);
+  return age;
+}
+
+function applyAge() {
+  document.querySelectorAll('.sage-age').forEach(el => {
+    el.textContent = getSageAge();
+  });
+}
+
 /* ── Desktop nav ── */
 const NAV_HTML = `
 <nav>
@@ -131,6 +150,9 @@ if (navEl) navEl.outerHTML = NAV_HTML;
 /* ── Inject footer ── */
 const footerEl = document.getElementById('footer-placeholder');
 if (footerEl) footerEl.outerHTML = FOOTER_HTML;
+
+/* ── Fill age spans ── */
+applyAge();
 
 /* ── Mark active nav item ── */
 (function markActive() {

@@ -3,17 +3,211 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon — Sage Sedivec</title>
+  <title>About — Sage Sedivec</title>
+  <meta name="description" content="About Sage Sedivec — 13-year-old singer-songwriter, fantasy author, and full-time boat kid sailing the Caribbean.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ── Bio sections ── */
+    .about-section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 72px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .about-section.reverse { direction: rtl; }
+    .about-section.reverse > * { direction: ltr; }
+
+    .about-section + .about-section {
+      padding-top: 0;
+    }
+
+    .about-section.divider {
+      border-top: 1.5px solid var(--pink-light);
+      padding-top: 64px;
+    }
+
+    .about-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(255,105,180,0.2);
+    }
+
+    .about-photo img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .about-photo.tall { aspect-ratio: 3/4; }
+    .about-photo.square { aspect-ratio: 1/1; }
+
+    .about-text h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 40px;
+      color: var(--pink);
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .about-text p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text em { font-style: italic; color: var(--pink-dark); font-weight: 400; }
+
+    /* ── Fact chips ── */
+    .fact-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--pink-pale);
+      border: 1.5px solid var(--pink-light);
+      border-radius: 50px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--pink-dark);
+    }
+
+    /* ── Links row ── */
+    .about-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 820px) {
+      .about-section {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 48px 24px;
+      }
+
+      .about-section.reverse { direction: ltr; }
+
+      .about-photo {
+        max-width: 340px;
+        margin: 0 auto;
+      }
+
+      .about-text h2 { font-size: 32px; }
+    }
+  </style>
 </head>
 <body>
+
   <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
   <section class="hero-sm">
-    <h1 class="hero-name">Coming Soon</h1>
-    <p class="hero-tagline">This page is being built</p>
+    <h1 class="hero-name">About Sage</h1>
+    <p class="hero-tagline">Singer-Songwriter · Author · Boat Kid</p>
   </section>
+
+  <!-- ── THE STORY ── -->
+  <section class="about-section">
+    <div class="about-photo tall">
+      <img
+        src="/assets/images/sage/sage-beach-guitar.jpg"
+        alt="Sage Sedivec playing guitar on the beach">
+    </div>
+    <div class="about-text">
+      <h2>Hi, I'm Sage</h2>
+      <p>I'm a <span class="sage-age">14</span>-year-old singer-songwriter, fantasy author, and full-time adventurer living on a sailboat in the Caribbean Sea.</p>
+      <p>I was born in Southern California and grew up between California, Abu Dhabi, Oregon and Cambridge — but for the past few years my home has been the ocean. My family and I live aboard a catamaran and sail from island to island, which means my backyard is the Caribbean Sea and my commute to school is approximately zero minutes.</p>
+      <p>I'm homeschooled, which gives me the time to do the things I love most: write fantasy novels, write and perform original music, free dive, bake (especially cookies and beef and bean chili), and hang out with my friends wherever we happen to be anchored.</p>
+      <div class="fact-chips">
+        <span class="chip">🎸 Singer-Songwriter</span>
+        <span class="chip">📚 Fantasy Author</span>
+        <span class="chip">⛵ Boat Kid</span>
+        <span class="chip">🌊 Caribbean</span>
+        <span class="chip">🏠 Homeschooled</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MUSIC ── -->
+  <section class="about-section reverse divider">
+    <div class="about-photo tall">
+      <img
+        src="/assets/images/sage/sage-boat-guitar.jpg"
+        alt="Sage holding her book">
+    </div>
+    <div class="about-text">
+      <h2>The Music</h2>
+      <p>I wrote my first song at eight years old, but it wasn't until I discovered Taylor Swift at eleven that writing really clicked for me. From there I was hooked — and I haven't stopped since.</p>
+      <p>I write and perform original songs, mostly inspired by real things that happen to me or the people around me. I play acoustic guitar and piano, and I work closely with my songwriting teacher Paulina Jayne.</p>
+      <p>You can find all my music on Instagram at <em>@songs.by.sage</em>. I post original songs and love connecting with people who listen.</p>
+      <div class="about-links">
+        <a class="btn-pink" href="/music/index.html">🎵 Hear my music</a>
+        <a class="btn-outline" href="https://www.instagram.com/songs.by.sage" target="_blank" rel="noopener">Follow on Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOOKS ── -->
+  <section class="about-section divider">
+    <div class="about-photo square">
+      <img
+        src="/assets/images/sage/sage-with-guardians-book.jpg"
+        alt="The Emerald Jaguar book cover">
+    </div>
+    <div class="about-text">
+      <h2>The Books</h2>
+      <p>I've always loved fantasy — magic, adventure, battles, and worlds where anything is possible. I wrote my first book at eleven and spent two years editing it before publishing it at thirteen.</p>
+      <p>That first book, <em>Guardians of the Secret Isles: The Emerald Jaguar</em>, is a middle grade fantasy adventure published in June 2025. It's the beginning of a five-book series, and there are more stories already in progress.</p>
+      <p>Writing taught me that creativity is powerful, but persistence is what turns imagination into reality. I'm proof that you don't have to wait to grow up to tell your story.</p>
+      <div class="about-links">
+        <a class="btn-pink" href="/books/index.html">📚 See my books</a>
+        <a class="btn-outline" href="/books/the-emerald-jaguar/index.html">The Emerald Jaguar →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── THE BOAT LIFE ── -->
+  <section class="about-section reverse divider">
+    <div class="about-photo tall">
+      <img
+        src="/assets/images/sage/sage-ice-cream-door3.jpg"
+        alt="Sage exploring a new island">
+    </div>
+    <div class="about-text">
+      <h2>The Boat Life</h2>
+      <p>Living on a sailboat is as wild as it sounds. We anchor in new places, meet cruising families from all over the world, and experience things most people only read about.</p>
+      <p>I do Aerial Silks from the mast of the boat. I free dive in the clearest water you've ever seen. I watch sunsets from the cockpit with my guitar. And I write — always write — wherever we are.</p>
+      <p>The sailing life gives me endless material. Every island is a new story. Every anchorage is a new chapter. I wouldn't trade it for anything.</p>
+      <div class="about-links">
+        <a class="btn-pink" href="/blog/index.html">🌊 Read the blog</a>
+      </div>
+    </div>
+  </section>
+
   <div id="footer-placeholder"></div>
   <script src="/assets/js/nav.js"></script>
 </body>
