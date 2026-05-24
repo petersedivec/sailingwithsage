@@ -211,24 +211,83 @@ applyAge();
   });
 })();
 
-/* ── Newsletter form ── */
-(function initNewsletter() {
-  const btn   = document.querySelector('.newsletter-form button');
-  const input = document.querySelector('.newsletter-form input');
-  if (!btn || !input) return;
+/* ── Newsletter form — posts directly to Substack API ────────
+   Substack sends the confirmation email automatically.
+   TODO: replace SUBSTACK_PUB with the actual publication name
+         e.g. if the URL is sagesedivec.substack.com use 'sagesedivec'
+         or if using custom domain blog.sailingwithsage.com,
+         the pub name is still the substack slug.
+   ---------------------------------------------------------- */
+const SUBSTACK_PUB = 'sagesedivec.substack.com'; // ← update this once account is live
 
-  btn.addEventListener('click', () => {
-    const email = input.value.trim();
-    if (!email || !email.includes('@')) {
-      input.style.borderColor = 'var(--pink-dark)';
-      input.focus();
-      return;
+async function subscribeToNewsletter(input, btn) {
+  const email = input.value.trim();
+
+  if (!email || !email.includes('@')) {
+    input.style.borderColor = 'var(--pink-dark)';
+    input.focus();
+    return;
+  }
+
+  // Loading state
+  const originalText = btn.textContent;
+  btn.textContent = '…';
+  btn.disabled    = true;
+  input.disabled  = true;
+
+  try {
+    const res = await fetch(`https://${SUBSTACK_PUB}.substack.com/api/v1/free`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email:          email,
+        first_url:      window.location.href,
+        first_referrer: document.referrer || '',
+      }),
+    });
+
+    if (res.ok || res.status === 200) {
+      // Success
+      input.value           = '';
+      input.style.borderColor = '';
+      btn.textContent       = '✓ Check your email!';
+      btn.style.background  = '#1a8f5a';
+      setTimeout(() => {
+        btn.textContent      = originalText;
+        btn.style.background = '';
+        btn.disabled         = false;
+        input.disabled       = false;
+      }, 4000);
+    } else {
+      throw new Error(`Status ${res.status}`);
     }
-    /* TODO: replace with your Substack subscribe URL */
-    const url = `https://sagesedivec.substack.com/subscribe?email=${encodeURIComponent(email)}`;
-    window.open(url, '_blank');
-    input.value = '';
-    btn.textContent = '✓ Done!';
-    setTimeout(() => { btn.textContent = 'Subscribe'; }, 3000);
+
+  } catch (err) {
+    // Fallback — open Substack in new tab with email pre-filled
+    window.open(
+      `https://${SUBSTACK_PUB}.substack.com/subscribe?email=${encodeURIComponent(email)}`,
+      '_blank'
+    );
+    btn.textContent = originalText;
+    btn.disabled    = false;
+    input.disabled  = false;
+  }
+}
+
+(function initNewsletter() {
+  document.querySelectorAll('.newsletter-form').forEach(form => {
+    const btn   = form.querySelector('button');
+    const input = form.querySelector('input[type="email"]');
+    if (!btn || !input) return;
+
+    btn.addEventListener('click', () => subscribeToNewsletter(input, btn));
+
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') subscribeToNewsletter(input, btn);
+    });
+
+    input.addEventListener('input', () => {
+      input.style.borderColor = '';
+    });
   });
 })();

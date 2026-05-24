@@ -45,11 +45,79 @@
 
     /* ── Calendar embed container ── */
     .calendar-embed {
-      background: #fff;
-      border: 1.5px solid var(--pink-light);
       border-radius: var(--radius);
       overflow: hidden;
-      /* eventscalendar.co renders into this div */
+      /* No background or border — let the widget handle its own chrome */
+    }
+
+    /* ── Override eventscalendar.co default dark theme ──────────
+       These target the widget's internal elements to match the
+       pink site theme. Add more overrides here if needed.
+       --------------------------------------------------------- */
+
+    /* Force white/light background throughout the widget */
+    [data-events-calendar-app],
+    [data-events-calendar-app] * {
+      box-shadow: none !important;
+    }
+
+    [data-events-calendar-app] {
+      background: transparent !important;
+      border: none !important;
+      color: var(--dark) !important;
+      font-family: 'Rubik', sans-serif !important;
+    }
+
+    /* Cards */
+    [data-events-calendar-app] .ec-card,
+    [data-events-calendar-app] [class*="card"],
+    [data-events-calendar-app] [class*="Card"] {
+      background: #fff !important;
+      border: 1.5px solid var(--pink-light) !important;
+      border-radius: 12px !important;
+      color: var(--dark) !important;
+    }
+
+    /* Headers and titles */
+    [data-events-calendar-app] [class*="header"],
+    [data-events-calendar-app] [class*="Header"],
+    [data-events-calendar-app] [class*="title"],
+    [data-events-calendar-app] [class*="Title"] {
+      background: transparent !important;
+      color: var(--dark) !important;
+      font-family: 'Rubik', sans-serif !important;
+    }
+
+    /* Buttons and accent elements */
+    [data-events-calendar-app] [class*="button"],
+    [data-events-calendar-app] [class*="Button"],
+    [data-events-calendar-app] [class*="btn"],
+    [data-events-calendar-app] button {
+      background: var(--pink) !important;
+      color: #fff !important;
+      border: none !important;
+      border-radius: 50px !important;
+      font-family: 'Rubik', sans-serif !important;
+    }
+
+    /* Date/time labels */
+    [data-events-calendar-app] [class*="date"],
+    [data-events-calendar-app] [class*="Date"],
+    [data-events-calendar-app] [class*="time"],
+    [data-events-calendar-app] [class*="Time"] {
+      color: var(--pink-dark) !important;
+    }
+
+    /* Links */
+    [data-events-calendar-app] a {
+      color: var(--pink) !important;
+    }
+
+    /* Any remaining dark backgrounds */
+    [data-events-calendar-app] [style*="background: rgb(0"],
+    [data-events-calendar-app] [style*="background:#000"],
+    [data-events-calendar-app] [style*="background: #000"] {
+      background: #fff !important;
     }
 
     /* ── No events placeholder (shown before account is set up) ── */
@@ -121,7 +189,7 @@
   <!-- HERO -->
   <section class="hero-sm">
     <h1 class="hero-name">Events</h1>
-    <p class="hero-tagline">Come see Sage perform live or attend a book signing!</p>
+    <p class="hero-tagline">Come see Sage perform live</p>
   </section>
 
   <div class="events-wrap">
