@@ -3,17 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon — Sage Sedivec</title>
+  <title>Events — Sage Sedivec</title>
+  <meta name="description" content="Upcoming performances, book signings, and appearances by Sage Sedivec.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    .events-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 48px 80px;
+    }
+
+    /* ── Intro strip ── */
+    .events-intro {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .events-intro-text h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 36px;
+      color: var(--dark);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .events-intro-text p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ── Calendar embed container ── */
+    .calendar-embed {
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      /* eventscalendar.co renders into this div */
+    }
+
+    /* ── No events placeholder (shown before account is set up) ── */
+    .events-placeholder {
+      text-align: center;
+      padding: 72px 32px;
+    }
+
+    .events-placeholder-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+
+    .events-placeholder h3 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 32px;
+      color: var(--dark);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .events-placeholder p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+      max-width: 380px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+
+    /* ── Contact CTA ── */
+    .events-contact {
+      background: var(--pink-pale);
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .events-contact h3 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 28px;
+      color: var(--dark);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .events-contact p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 820px) {
+      .events-wrap { padding: 40px 24px 64px; }
+      .events-intro { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
+
   <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
   <section class="hero-sm">
-    <h1 class="hero-name">Coming Soon</h1>
-    <p class="hero-tagline">This page is being built</p>
+    <h1 class="hero-name">Events</h1>
+    <p class="hero-tagline">Come see Sage perform live or attend a book signing!</p>
   </section>
+
+  <div class="events-wrap">
+
+    <div class="events-intro">
+      <div class="events-intro-text">
+        <h2>Upcoming Shows &amp; Appearances</h2>
+        <p>Performances, book signings, and pop-up shows — wherever the boat is anchored.</p>
+      </div>
+      <a class="btn-pink" href="/about/contact.html">Book Sage ✉️</a>
+    </div>
+
+    <!-- ── CALENDAR EMBED ─────────────────────────────────────────
+         TODO: Replace YOUR_PROJECT_ID with the project ID from
+         your eventscalendar.co dashboard once the account is set up.
+         The data-view="cards" attribute sets the Cards layout.
+         ──────────────────────────────────────────────────────── -->
+    <div class="calendar-embed">
+
+      <!-- ── UNCOMMENT THIS BLOCK and remove the placeholder below
+               once your eventscalendar.co Project ID is ready:
+
+      <div
+        data-events-calendar-app
+        data-project-id="YOUR_PROJECT_ID"
+        data-view="cards"
+      ></div>
+      <script src="//dist.eventscalendar.co/embed.js"></script>
+
+      ── -->
+
+      <!-- Placeholder shown until account is configured -->
+      <div class="events-placeholder">
+        <div class="events-placeholder-icon">🗓️</div>
+        <h3>Events coming soon</h3>
+        <p>Check back soon for upcoming performances, book signings, and appearances!</p>
+        <a class="btn-outline" href="https://www.instagram.com/songs.by.sage" target="_blank" rel="noopener">
+          Follow on Instagram for updates
+        </a>
+      </div>
+
+    </div>
+
+    <!-- ── BOOKING CTA ── -->
+    <div class="events-contact">
+      <h3>Want to book Sage?</h3>
+      <p>Interested in having Sage perform at your event or appear at your school or bookstore? Get in touch.</p>
+      <a class="btn-pink" href="/about/contact.html">✉️ Contact me</a>
+    </div>
+
+  </div>
+
   <div id="footer-placeholder"></div>
   <script src="/assets/js/nav.js"></script>
 </body>

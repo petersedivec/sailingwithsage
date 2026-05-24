@@ -42,15 +42,15 @@ const NAV_HTML = `
       </li>
       <li data-page="music">
         <a href="/music/index.html">Music <span class="chevron">▾</span></a>
-        <div class="dropdown">
+        <div class="dropdown"><div class="dropdown-inner">
           <a href="/music/songs/index.html">Songs</a>
-        </div>
+        </div></div>
       </li>
       <li data-page="books">
         <a href="/books/index.html">Books <span class="chevron">▾</span></a>
-        <div class="dropdown">
+        <div class="dropdown"><div class="dropdown-inner">
           <a href="/books/the-emerald-jaguar/index.html">The Emerald Jaguar</a>
-        </div>
+        </div></div>
       </li>
       <li data-page="blog">
         <a href="/blog/index.html">Blog</a>
@@ -63,10 +63,10 @@ const NAV_HTML = `
       </li>
       <li data-page="about">
         <a href="/about/index.html">About <span class="chevron">▾</span></a>
-        <div class="dropdown">
+        <div class="dropdown"><div class="dropdown-inner">
           <a href="/about/contact.html">Contact Me</a>
           <a href="/about/qa.html">Q&amp;A</a>
-        </div>
+        </div></div>
       </li>
     </ul>
 

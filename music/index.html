@@ -3,17 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon — Sage Sedivec</title>
+  <title>Music — Sage Sedivec</title>
+  <meta name="description" content="Original songs and covers by Sage Sedivec — singer-songwriter living on a sailboat in the Caribbean.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    /* ── Music landing layout ── */
+    .music-intro {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 72px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .music-intro-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(255,105,180,0.25);
+      aspect-ratio: 3/4;
+    }
+
+    .music-intro-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .music-intro-text h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 44px;
+      color: var(--pink);
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .music-intro-text p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+
+    .music-intro-text p:last-of-type { margin-bottom: 28px; }
+    .music-intro-text em { font-style: italic; color: var(--pink-dark); }
+
+    /* ── Stats strip ── */
+    .music-stats {
+      background: var(--pink);
+      padding: 40px 48px;
+    }
+
+    .music-stats-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 52px;
+      color: rgb(255,255,242);
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Rubik', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── Inspiration section ── */
+    .music-inspiration {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 64px 48px;
+    }
+
+    .music-inspiration h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 40px;
+      color: var(--dark);
+      letter-spacing: 1px;
+      margin-bottom: 32px;
+    }
+
+    .music-inspiration h2 span { color: var(--pink); }
+
+    .inspiration-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .inspiration-card {
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+    }
+
+    .inspiration-card .ic-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .inspiration-card h3 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 22px;
+      color: var(--pink-dark);
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .inspiration-card p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 820px) {
+      .music-intro {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 48px 24px;
+      }
+
+      .music-intro-photo {
+        max-width: 320px;
+        margin: 0 auto;
+      }
+
+      .music-stats { padding: 32px 24px; }
+      .music-stats-inner { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .stat-num { font-size: 38px; }
+
+      .music-inspiration { padding: 48px 24px; }
+      .inspiration-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+
   <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
   <section class="hero-sm">
-    <h1 class="hero-name">Coming Soon</h1>
-    <p class="hero-tagline">This page is being built</p>
+    <h1 class="hero-name">Music</h1>
+    <p class="hero-tagline">Original songs and covers — straight from the boat</p>
   </section>
+
+  <!-- ── INTRO ── -->
+  <section class="music-intro">
+    <div class="music-intro-photo">
+      <img
+        src="/assets/images/sage/sage-beach-guitar.jpg"
+        alt="Sage Sedivec playing guitar on the beach">
+    </div>
+    <div class="music-intro-text">
+      <h2>My Story in Songs</h2>
+      <p>I wrote my first song at eight years old. It wasn't very good — but it was mine. Music became my way of turning feelings I couldn't quite say out loud into something I could share.</p>
+      <p>I play acoustic guitar and piano, and I write about everything: friendships, the places I travel, moments on the boat, the people who shape me. Sometimes a song starts as a voice memo recorded on a ski slope. Sometimes it comes from a late-night Zoom call with my best friend Lyla.</p>
+      <p>All my songs are posted on Instagram at <em>@songs.by.sage</em> — I'd love for you to listen.</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <a class="btn-pink" href="/music/songs/index.html">🎵 All my songs</a>
+        <a class="btn-outline" href="https://www.instagram.com/songs.by.sage" target="_blank" rel="noopener">Follow on Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="music-stats">
+    <div class="music-stats-inner">
+      <div>
+        <div class="stat-num">8</div>
+        <div class="stat-label">Age I wrote my first song</div>
+      </div>
+      <div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Instruments I play</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Songs still to write</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── WHAT INSPIRES ME ── -->
+  <section class="music-inspiration">
+    <h2>What <span>inspires</span> me</h2>
+    <div class="inspiration-grid">
+      <div class="inspiration-card">
+        <span class="ic-icon">🌊</span>
+        <h3>The Ocean</h3>
+        <p>Living on a sailboat gives you endless material. Sunsets, storms, new anchorages — everything finds its way into a song eventually.</p>
+      </div>
+      <div class="inspiration-card">
+        <span class="ic-icon">💚</span>
+        <h3>Friendships</h3>
+        <p>My closest songs come from real relationships — the complicated ones, the perfect ones, and everything in between.</p>
+      </div>
+      <div class="inspiration-card">
+        <span class="ic-icon">✨</span>
+        <h3>Everyday moments</h3>
+        <p>I once recorded five or six voice memos on a ski slope because a melody kept coming to me. Inspiration doesn't wait for a convenient moment.</p>
+      </div>
+    </div>
+  </section>
+
   <div id="footer-placeholder"></div>
   <script src="/assets/js/nav.js"></script>
 </body>
