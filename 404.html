@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — Sage Sedivec</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    .lost-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 80px 48px;
+      text-align: center;
+    }
+
+    .lost-code {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: clamp(80px, 18vw, 140px);
+      color: var(--pink-light);
+      letter-spacing: 4px;
+      line-height: 1;
+      margin-bottom: 0;
+    }
+
+    .lost-icon {
+      font-size: 56px;
+      margin: 8px 0 16px;
+      display: block;
+    }
+
+    .lost-title {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 40px;
+      color: var(--dark);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .lost-body {
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+
+    .lost-links {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    /* Quick nav tiles */
+    .lost-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1.5px solid var(--pink-light);
+    }
+
+    .lost-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 18px 12px;
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-family: 'Rubik', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--dark);
+      transition: border-color 0.15s, background 0.15s, transform 0.15s;
+    }
+
+    .lost-tile:hover {
+      border-color: var(--pink);
+      background: var(--pink-pale);
+      transform: translateY(-2px);
+    }
+
+    .lost-tile-icon { font-size: 24px; }
+
+    @media (max-width: 600px) {
+      .lost-wrap { padding: 56px 24px; }
+      .lost-tiles { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <div class="lost-wrap">
+    <div class="lost-code">404</div>
+    <span class="lost-icon">🌊</span>
+    <h1 class="lost-title">Lost at sea!</h1>
+    <p class="lost-body">
+      This page must have drifted away on the current. Don't worry —
+      the rest of the site is right here waiting for you.
+    </p>
+
+    <div class="lost-links">
+      <a class="btn-pink" href="/">← Back to home</a>
+      <a class="btn-outline" href="/about/contact.html">Contact Sage</a>
+    </div>
+
+    <div class="lost-tiles">
+      <a class="lost-tile" href="/music/index.html">
+        <span class="lost-tile-icon">🎵</span>
+        Music
+      </a>
+      <a class="lost-tile" href="/books/index.html">
+        <span class="lost-tile-icon">📚</span>
+        Books
+      </a>
+      <a class="lost-tile" href="/blog/index.html">
+        <span class="lost-tile-icon">📰</span>
+        Blog
+      </a>
+      <a class="lost-tile" href="/events/index.html">
+        <span class="lost-tile-icon">🗓️</span>
+        Events
+      </a>
+      <a class="lost-tile" href="/support/index.html">
+        <span class="lost-tile-icon">💝</span>
+        Support
+      </a>
+      <a class="lost-tile" href="/about/index.html">
+        <span class="lost-tile-icon">👋</span>
+        About
+      </a>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <script src="/assets/js/nav.js"></script>
+</body>
+</html>
