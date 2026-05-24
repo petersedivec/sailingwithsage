@@ -338,6 +338,23 @@
 
     </div>
 
+    <!-- ── NEWSLETTER — full width ── -->
+    <div class="support-card card-newsletter" style="margin-top: 24px;">
+      <div class="newsletter-support-inner">
+        <div class="newsletter-support-text">
+          <div class="support-card-header"><span class="support-card-icon">💌</span><h3>Join the Newsletter</h3></div>
+          <p>Get new music, book updates, and ocean adventures delivered straight to your inbox. No spam — just Sage.</p>
+        </div>
+        <div class="newsletter-support-form">
+          <div class="newsletter-form" style="max-width: 400px; margin: 0;">
+            <input type="email" placeholder="your@email.com" aria-label="Email address">
+            <button type="button" onclick="subscribeSupport(this)">Subscribe</button>
+          </div>
+          <p class="newsletter-note">Join <strong>50+</strong> subscribers already following along</p>
+        </div>
+      </div>
+    </div>
+
     </div><!-- /support-grid -->
 
   </div><!-- /support-wrap -->
@@ -346,6 +363,8 @@
   <script src="/assets/js/nav.js"></script>
 
   <script>
+    const SUBSTACK_PUB = 'sagesedivec';
+
     function copyToClipboard(text, btn) {
       navigator.clipboard.writeText(text).then(() => {
         btn.classList.add('copied');
@@ -356,17 +375,56 @@
     function subscribeSupport(btn) {
       const input = btn.previousElementSibling;
       const email = input.value.trim();
+
       if (!email || !email.includes('@')) {
         input.style.borderColor = 'var(--pink-dark)';
         input.focus();
         return;
       }
-      /* TODO: replace with your Substack subscribe URL */
-      const url = `https://sagesedivec.substack.com/subscribe?email=${encodeURIComponent(email)}`;
-      window.open(url, '_blank');
-      input.value = '';
-      btn.textContent = '✓ Done!';
-      setTimeout(() => { btn.textContent = 'Subscribe'; }, 3000);
+
+      const originalText = btn.textContent;
+
+      const form   = document.createElement('form');
+      form.method  = 'POST';
+      form.action  = `https://${SUBSTACK_PUB}.substack.com/api/v1/free`;
+      form.target  = 'substack-frame';
+      form.style.display = 'none';
+
+      const emailField  = document.createElement('input');
+      emailField.name   = 'email';
+      emailField.value  = email;
+      const urlField    = document.createElement('input');
+      urlField.name     = 'first_url';
+      urlField.value    = window.location.href;
+
+      form.appendChild(emailField);
+      form.appendChild(urlField);
+      document.body.appendChild(form);
+
+      let iframe = document.getElementById('substack-frame');
+      if (!iframe) {
+        iframe        = document.createElement('iframe');
+        iframe.name   = 'substack-frame';
+        iframe.id     = 'substack-frame';
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      }
+
+      form.submit();
+      document.body.removeChild(form);
+
+      input.value           = '';
+      input.disabled        = true;
+      btn.textContent       = '✓ Check your email!';
+      btn.style.background  = '#1a8f5a';
+      btn.disabled          = true;
+
+      setTimeout(() => {
+        btn.textContent      = originalText;
+        btn.style.background = '';
+        btn.disabled         = false;
+        input.disabled       = false;
+      }, 5000);
     }
   </script>
 </body>

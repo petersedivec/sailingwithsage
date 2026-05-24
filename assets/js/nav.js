@@ -211,16 +211,14 @@ applyAge();
   });
 })();
 
-/* ── Newsletter form — posts directly to Substack API ────────
-   Substack sends the confirmation email automatically.
-   TODO: replace SUBSTACK_PUB with the actual publication name
-         e.g. if the URL is sagesedivec.substack.com use 'sagesedivec'
-         or if using custom domain blog.sailingwithsage.com,
-         the pub name is still the substack slug.
+/* ── Newsletter form — uses Substack's native embed form
+   Substack blocks CORS so we can't use fetch() from external
+   domains. Instead we submit directly to Substack's endpoint
+   using a hidden form POST — no redirect, no new tab.
    ---------------------------------------------------------- */
-const SUBSTACK_PUB = 'sagesedivec.substack.com'; // ← update this once account is live
+const SUBSTACK_PUB = 'sagesedivec'; // ← update if slug changes
 
-async function subscribeToNewsletter(input, btn) {
+function subscribeToNewsletter(input, btn) {
   const email = input.value.trim();
 
   if (!email || !email.includes('@')) {
@@ -229,49 +227,54 @@ async function subscribeToNewsletter(input, btn) {
     return;
   }
 
-  // Loading state
   const originalText = btn.textContent;
-  btn.textContent = '…';
-  btn.disabled    = true;
-  input.disabled  = true;
 
-  try {
-    const res = await fetch(`https://${SUBSTACK_PUB}.substack.com/api/v1/free`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email:          email,
-        first_url:      window.location.href,
-        first_referrer: document.referrer || '',
-      }),
-    });
+  // Build a hidden form that POSTs directly to Substack
+  const form   = document.createElement('form');
+  form.method  = 'POST';
+  form.action  = `https://${SUBSTACK_PUB}.substack.com/api/v1/free`;
+  form.target  = 'substack-frame'; // post into hidden iframe — no redirect
+  form.style.display = 'none';
 
-    if (res.ok || res.status === 200) {
-      // Success
-      input.value           = '';
-      input.style.borderColor = '';
-      btn.textContent       = '✓ Check your email!';
-      btn.style.background  = '#1a8f5a';
-      setTimeout(() => {
-        btn.textContent      = originalText;
-        btn.style.background = '';
-        btn.disabled         = false;
-        input.disabled       = false;
-      }, 4000);
-    } else {
-      throw new Error(`Status ${res.status}`);
-    }
+  const emailField   = document.createElement('input');
+  emailField.name    = 'email';
+  emailField.value   = email;
 
-  } catch (err) {
-    // Fallback — open Substack in new tab with email pre-filled
-    window.open(
-      `https://${SUBSTACK_PUB}.substack.com/subscribe?email=${encodeURIComponent(email)}`,
-      '_blank'
-    );
-    btn.textContent = originalText;
-    btn.disabled    = false;
-    input.disabled  = false;
+  const referrerField  = document.createElement('input');
+  referrerField.name   = 'first_url';
+  referrerField.value  = window.location.href;
+
+  form.appendChild(emailField);
+  form.appendChild(referrerField);
+  document.body.appendChild(form);
+
+  // Hidden iframe absorbs the POST response
+  let iframe = document.getElementById('substack-frame');
+  if (!iframe) {
+    iframe        = document.createElement('iframe');
+    iframe.name   = 'substack-frame';
+    iframe.id     = 'substack-frame';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
   }
+
+  form.submit();
+  document.body.removeChild(form);
+
+  // Optimistic success UI
+  input.value           = '';
+  input.style.borderColor = '';
+  input.disabled        = true;
+  btn.textContent       = '✓ Check your email!';
+  btn.style.background  = '#1a8f5a';
+  btn.disabled          = true;
+
+  setTimeout(() => {
+    btn.textContent      = originalText;
+    btn.style.background = '';
+    btn.disabled         = false;
+    input.disabled       = false;
+  }, 5000);
 }
 
 (function initNewsletter() {
