@@ -3,18 +3,435 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coming Soon — Sage Sedivec</title>
+  <title>Blog — Sage Sedivec</title>
+  <meta name="description" content="Sage Sedivec's blog — stories from the sea, new islands, wild weather, and life aboard a catamaran in the Caribbean.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    .blog-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 48px 80px;
+    }
+
+    /* ── Intro ── */
+    .blog-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+
+    .blog-intro-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(255,105,180,0.2);
+      aspect-ratio: 4/3;
+    }
+
+    .blog-intro-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .blog-intro-text h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 40px;
+      color: var(--pink);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .blog-intro-text p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+
+    .blog-intro-text p:last-child { margin-bottom: 0; }
+    .blog-intro-text em { color: var(--pink-dark); font-style: italic; }
+
+    /* ── Substack embed strip ── */
+    .blog-substack {
+      background: var(--pink);
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blog-substack::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .blog-substack h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 38px;
+      color: rgb(255,255,242);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .blog-substack p {
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: rgba(255,255,255,0.9);
+      font-weight: 300;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .blog-substack-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: #fff;
+      color: var(--pink-dark);
+      border-radius: var(--radius-pill);
+      font-family: 'Rubik', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-white:hover {
+      background: var(--pink-pale);
+      transform: translateY(-1px);
+    }
+
+    .btn-white-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.6);
+      border-radius: var(--radius-pill);
+      font-family: 'Rubik', sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    .btn-white-outline:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: #fff;
+    }
+
+    /* ── Recent posts from Substack RSS ── */
+    .blog-recent h2 {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 36px;
+      color: var(--dark);
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .blog-recent h2::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--pink-light);
+      border-radius: 2px;
+    }
+
+    /* Post cards */
+    .blog-posts {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .blog-post-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+
+    .blog-post-card:hover {
+      border-color: var(--pink);
+      box-shadow: 0 8px 32px rgba(255,105,180,0.12);
+      transform: translateY(-2px);
+    }
+
+    .blog-post-num {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 32px;
+      color: var(--pink-light);
+      letter-spacing: 1px;
+      flex-shrink: 0;
+      width: 36px;
+      text-align: center;
+      line-height: 1;
+      padding-top: 2px;
+    }
+
+    .blog-post-body { flex: 1; }
+
+    .blog-post-title {
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .blog-post-excerpt {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .blog-post-meta {
+      font-family: 'Rubik', sans-serif;
+      font-size: 12px;
+      color: var(--pink);
+      font-weight: 500;
+    }
+
+    .blog-post-arrow {
+      flex-shrink: 0;
+      color: var(--pink-light);
+      font-size: 20px;
+      padding-top: 2px;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .blog-post-card:hover .blog-post-arrow {
+      color: var(--pink);
+      transform: translateX(3px);
+    }
+
+    /* Skeleton loading */
+    .blog-post-skel {
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .skel-num {
+      width: 36px;
+      height: 32px;
+      background: linear-gradient(90deg, var(--pink-pale) 25%, #ffe6f3 50%, var(--pink-pale) 75%);
+      background-size: 200% 100%;
+      border-radius: 6px;
+      animation: shimmer 1.4s infinite;
+      flex-shrink: 0;
+    }
+
+    .skel-body { flex: 1; }
+
+    .skel-title {
+      height: 16px;
+      width: 75%;
+      background: linear-gradient(90deg, var(--pink-pale) 25%, #ffe6f3 50%, var(--pink-pale) 75%);
+      background-size: 200% 100%;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      animation: shimmer 1.4s infinite;
+    }
+
+    .skel-line {
+      height: 12px;
+      background: linear-gradient(90deg, var(--pink-pale) 25%, #ffe6f3 50%, var(--pink-pale) 75%);
+      background-size: 200% 100%;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      animation: shimmer 1.4s infinite;
+    }
+
+    .skel-line.short { width: 40%; }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* No posts state */
+    .blog-no-posts {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .blog-wrap { padding: 40px 20px 64px; }
+      .blog-intro {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-bottom: 40px;
+      }
+      .blog-intro-photo { max-width: 320px; margin: 0 auto; }
+      .blog-substack { padding: 36px 24px; }
+      .blog-substack h2 { font-size: 30px; }
+      .blog-post-num { display: none; }
+    }
+  </style>
 </head>
 <body>
+
   <div id="nav-placeholder"></div>
+
+  <!-- HERO -->
   <section class="hero-sm">
-    <h1 class="hero-name">Coming Soon</h1>
-    <p class="hero-tagline">This page is being built</p>
+    <h1 class="hero-name">Blog</h1>
+    <p class="hero-tagline">Stories from the sea</p>
   </section>
+
+  <div class="blog-wrap">
+
+    <!-- ── INTRO ── -->
+    <div class="blog-intro">
+      <div class="blog-intro-photo">
+        <img
+          src="/assets/images/sage/sage-beach-guitar.jpg"
+          alt="Sage Sedivec on the beach">
+      </div>
+      <div class="blog-intro-text">
+        <h2>From the boat</h2>
+        <p>Life on a sailboat in the Caribbean gives you a lot of stories. New anchorages, unexpected squalls, friendly strangers who become fast friends — I try to write about all of it.</p>
+        <p>The blog lives on Substack, where each post also goes out as a newsletter to subscribers. If you want the stories delivered straight to your inbox, <em>subscribing is free</em> and you can unsubscribe any time.</p>
+      </div>
+    </div>
+
+    <!-- ── SUBSTACK CTA ── -->
+    <div class="blog-substack">
+      <h2>Read the full blog on Substack</h2>
+      <p>All posts, archives, and the free newsletter — in one place.</p>
+      <div class="blog-substack-btns">
+        <a class="btn-white" href="https://sagesedivec.substack.com" target="_blank" rel="noopener">
+          📰 Read the blog
+        </a>
+        <a class="btn-white-outline" href="https://sagesedivec.substack.com/subscribe" target="_blank" rel="noopener">
+          ✉️ Subscribe free
+        </a>
+      </div>
+    </div>
+
+    <!-- ── RECENT POSTS (from Substack RSS) ── -->
+    <div class="blog-recent">
+      <h2>Recent posts</h2>
+      <div class="blog-posts" id="blog-posts-list">
+        <!-- Skeletons shown while loading -->
+        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+      </div>
+    </div>
+
+  </div>
+
   <div id="footer-placeholder"></div>
   <script src="/assets/js/nav.js"></script>
+
+  <script>
+    /* ── Load recent posts from Substack RSS via rss2json ──────────
+       rss2json.com is a free public RSS→JSON proxy.
+       TODO: update SUBSTACK_URL to the actual Substack publication
+             URL once the account is set up.
+       ─────────────────────────────────────────────────────────── */
+    const SUBSTACK_URL = 'https://sagesedivec.substack.com/feed';
+    const RSS_API      = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(SUBSTACK_URL)}&count=5`;
+
+    async function loadPosts() {
+      const list = document.getElementById('blog-posts-list');
+
+      try {
+        const res  = await fetch(RSS_API);
+        const data = await res.json();
+
+        if (data.status !== 'ok' || !data.items?.length) throw new Error('No posts');
+
+        list.innerHTML = '';
+        data.items.forEach((item, i) => {
+          // Strip HTML tags from excerpt
+          const div = document.createElement('div');
+          div.innerHTML = item.description || '';
+          const excerpt = (div.textContent || '').slice(0, 120).trim() + '…';
+
+          const date = new Date(item.pubDate).toLocaleDateString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric'
+          });
+
+          const card = document.createElement('a');
+          card.className  = 'blog-post-card';
+          card.href       = item.link;
+          card.target     = '_blank';
+          card.rel        = 'noopener noreferrer';
+          card.innerHTML  = `
+            <div class="blog-post-num">${String(i + 1).padStart(2, '0')}</div>
+            <div class="blog-post-body">
+              <div class="blog-post-title">${item.title}</div>
+              <div class="blog-post-excerpt">${excerpt}</div>
+              <div class="blog-post-meta">${date}</div>
+            </div>
+            <span class="blog-post-arrow">→</span>`;
+
+          list.appendChild(card);
+        });
+
+      } catch {
+        // Not live yet or no posts — show friendly message
+        list.innerHTML = `
+          <div class="blog-no-posts">
+            🌊 Blog posts coming soon — subscribe on Substack to be the first to know!
+          </div>`;
+      }
+    }
+
+    loadPosts();
+  </script>
 </body>
 </html>
