@@ -3,424 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support Sage — Sage Sedivec</title>
-  <meta name="description" content="Support Sage Sedivec — buy her book, listen to her music, spread the word, or leave a tip.">
-
+  <title>Sage Sedivec — Singer-Songwriter, Author &amp; Boat Kid</title>
+  <meta name="description" content="Sage Sedivec is a 13-year-old singer-songwriter, author, and full-time adventurer living on a sailboat in the Caribbean. Original music, fantasy novels, and ocean adventures.">
+  <meta property="og:title" content="Sage Sedivec">
+  <meta property="og:description" content="Singer-Songwriter, Author &amp; Boat Kid — sailing the Caribbean, writing fantasy novels, and making original music.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sailingwithsage.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/main.css">
-
-  <style>
-    .support-wrap {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 56px 48px 80px;
-    }
-
-    .support-intro {
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto 56px;
-    }
-
-    .support-intro h2 {
-      font-family: 'Londrina Shadow', cursive;
-      font-size: 44px;
-      color: var(--dark);
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
-
-    .support-intro h2 span { color: var(--pink); }
-
-    .support-intro p {
-      font-family: 'Rubik', sans-serif;
-      font-size: 16px;
-      color: var(--muted);
-      font-weight: 300;
-      line-height: 1.7;
-    }
-
-    /* ── 2x2 support card grid ── */
-    .support-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    .support-card {
-      background: #fff;
-      border: 1.5px solid var(--pink-light);
-      border-radius: 20px;
-      padding: 28px 28px 28px;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-    }
-
-    .support-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(255,105,180,0.15);
-      border-color: var(--pink);
-    }
-
-    /* Icon + heading on one line */
-    .support-card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
-    }
-
-    .support-card-icon {
-      font-size: 28px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-
-    .support-card h3 {
-      font-family: 'Londrina Shadow', cursive;
-      font-size: 28px;
-      color: var(--dark);
-      letter-spacing: 1px;
-      margin: 0;
-    }
-
-    .support-card p {
-      font-family: 'Rubik', sans-serif;
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 20px;
-      flex: 1;
-    }
-
-    .support-card em {
-      font-style: italic;
-      color: var(--pink-dark);
-    }
-
-    /* Card-specific accent colors */
-    .card-book   { border-top: 4px solid var(--pink); }
-    .card-music  { border-top: 4px solid #b8d4ff; }
-    .card-spread { border-top: 4px solid #ffd4b8; }
-    .card-tip    { border-top: 4px solid #b8f0d4; }
-
-    .card-book  h3 { color: var(--pink-dark); }
-    .card-music h3 { color: #2a5fbf; }
-    .card-spread h3 { color: #c07a30; }
-    .card-tip   h3 { color: #1a8f5a; }
-
-    /* Button variants */
-    .btn-blue {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: #2a5fbf;
-      color: #fff;
-      border-radius: var(--radius-pill);
-      font-family: 'Rubik', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-blue:hover { background: #1e4a99; transform: translateY(-1px); }
-
-    .btn-orange {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: #e8872a;
-      color: #fff;
-      border-radius: var(--radius-pill);
-      font-family: 'Rubik', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-orange:hover { background: #c96f1a; transform: translateY(-1px); }
-
-    .btn-green {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: #1a8f5a;
-      color: #fff;
-      border-radius: var(--radius-pill);
-      font-family: 'Rubik', sans-serif;
-      font-weight: 500;
-      font-size: 14px;
-      transition: background 0.2s, transform 0.15s;
-    }
-
-    .btn-green:hover { background: #146b44; transform: translateY(-1px); }
-
-    /* Multi-button stacks */
-    .btn-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    /* Share links */
-    .share-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .share-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 11px 16px;
-      background: var(--pink-pale);
-      border: 1.5px solid var(--pink-light);
-      border-radius: 10px;
-      font-family: 'Rubik', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--pink-dark);
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-      text-decoration: none;
-      user-select: none;
-    }
-
-    .share-link:hover {
-      background: #ffe0f0;
-      border-color: var(--pink);
-    }
-
-    .share-link .share-icon { font-size: 18px; flex-shrink: 0; }
-    .share-link .share-copied {
-      margin-left: auto;
-      font-size: 11px;
-      color: #1a8f5a;
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .share-link.copied .share-copied { opacity: 1; }
-
-    /* ── Newsletter card — full width ── */
-    .card-newsletter {
-      border-top: 4px solid var(--pink);
-      grid-column: 1 / -1;
-    }
-
-    .card-newsletter h3 { color: var(--pink-dark); }
-
-    .newsletter-support-inner {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-
-    .newsletter-support-text {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .newsletter-support-text .support-card-header {
-      margin-bottom: 8px;
-    }
-
-    .newsletter-support-text p {
-      margin-bottom: 0;
-      font-size: 14px;
-    }
-
-    .newsletter-support-form {
-      flex: 1;
-      min-width: 280px;
-    }
-
-    .newsletter-note {
-      font-family: 'Rubik', sans-serif;
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 10px;
-      font-weight: 300;
-    }
-
-    .newsletter-note strong {
-      color: var(--pink-dark);
-      font-weight: 500;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 720px) {
-      .support-wrap { padding: 40px 20px 64px; }
-      .support-grid { grid-template-columns: 1fr; gap: 16px; }
-      .support-card { padding: 32px 24px; }
-      .newsletter-support-inner { flex-direction: column; gap: 24px; }
-      .newsletter-support-form { width: 100%; }
-    }
-  </style>
 </head>
 <body>
 
   <div id="nav-placeholder"></div>
 
   <!-- HERO -->
-  <section class="hero-sm">
-    <h1 class="hero-name">Support Sage</h1>
-    <p class="hero-tagline">Every little bit means the world 💖</p>
+  <section class="hero">
+    <h1 class="hero-name">Sage Sedivec</h1>
+    <p class="hero-tagline">Singer-Songwriter &nbsp;&middot;&nbsp; Author &nbsp;&middot;&nbsp; Boat Kid</p>
   </section>
 
-  <div class="support-wrap">
-
-    <div class="support-intro">
-      <h2>Ways to <span>show your love</span></h2>
-      <p>Sage is a 14-year-old independent artist and author doing everything herself — writing, recording, and publishing from a sailboat in the Caribbean. Your support makes it all possible.</p>
+  <!-- BIO -->
+  <section class="bio">
+    <div class="bio-photo">
+      <img
+        src="/assets/images/sage/sage-beach-guitar.jpg"
+        alt="Sage Sedivec playing guitar on the beach in the Caribbean">
     </div>
-
-    <div class="support-grid">
-
-      <!-- ── SPREAD THE WORD ── -->
-      <div class="support-card card-spread">
-        <div class="support-card-header"><span class="support-card-icon">📣</span><h3>Spread the Word</h3></div>
-        <p>One of the most powerful things you can do is tell someone about Sage. Share her site, her music, or her book with a friend, a teacher, or anyone who loves a good story or a great song.</p>
-        <div class="share-links">
-          <button class="share-link" id="share-site" onclick="copyToClipboard('https://sailingwithsage.com', this)">
-            <span class="share-icon">🔗</span>
-            Copy website link
-            <span class="share-copied">✓ Copied!</span>
-          </button>
-          <a class="share-link" href="https://www.instagram.com/songs.by.sage" target="_blank" rel="noopener">
-            <span class="share-icon">📸</span>
-            Follow on Instagram
-          </a>
-          <a class="share-link" href="mailto:?subject=Check out Sage Sedivec&body=I think you'll love this — she's a 14-year-old singer-songwriter and author sailing the Caribbean! https://sailingwithsage.com">
-            <span class="share-icon">✉️</span>
-            Share via email
-          </a>
-        </div>
-      </div>
-
-      <!-- ── LEAVE A TIP ── -->
-      <div class="support-card card-tip">
-        <div class="support-card-header"><span class="support-card-icon">💝</span><h3>Leave a Tip</h3></div>
-        <p>If Sage's music or writing has meant something to you, a small tip helps cover the costs of recording, publishing, and keeping the website running. Every contribution is deeply appreciated.</p>
-        <div class="btn-stack">
-          <a class="btn-green" href="/support/tip.html">💝 Leave a tip</a>
-        </div>
-      </div>
-
-      <!-- ── BUY THE BOOK ── -->
-      <div class="support-card card-book">
-        <div class="support-card-header"><span class="support-card-icon">📚</span><h3>Buy the Book</h3></div>
-        <p>Pick up a copy of <em>The Emerald Jaguar</em> — Book 1 of the Guardians of the Secret Isles series. A middle grade fantasy adventure written and published by Sage at age 13.</p>
-        <div class="btn-stack">
-          <!-- TODO: replace # with the Amazon book link -->
-          <a class="btn-pink" href="#" target="_blank" rel="noopener">🛒 Buy on Amazon</a>
-        </div>
-      </div>
-
-      <!-- ── LISTEN TO HER MUSIC ── -->
-      <div class="support-card card-music">
-        <div class="support-card-header"><span class="support-card-icon">🎵</span><h3>Listen to her Music</h3></div>
-        <p>Sage writes and records original songs from the boat. The best way to support her music is to watch, like, comment, and follow on Instagram — it makes a huge difference for a young independent artist.</p>
-        <div class="btn-stack">
-          <a class="btn-blue" href="https://www.instagram.com/songs.by.sage" target="_blank" rel="noopener">📱 @songs.by.sage on Instagram</a>
-          <a class="btn-outline" href="/music/songs/index.html">🎶 Browse all songs</a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ── NEWSLETTER — full width ── -->
-    <div class="support-card card-newsletter" style="margin-top: 24px;">
-      <div class="newsletter-support-inner">
-        <div class="newsletter-support-text">
-          <div class="support-card-header"><span class="support-card-icon">💌</span><h3>Join the Newsletter</h3></div>
-          <p>Get new music, book updates, and ocean adventures delivered straight to your inbox. No spam — just Sage.</p>
-        </div>
-        <div class="newsletter-support-form">
-          <div class="newsletter-form" style="max-width: 400px; margin: 0;">
-            <input type="email" placeholder="your@email.com" aria-label="Email address">
-            <button type="button" onclick="subscribeSupport(this)">Subscribe</button>
-          </div>
-          <p class="newsletter-note">Join <strong>50+</strong> subscribers already following along</p>
-        </div>
+    <div class="bio-text">
+      <p class="bio-greeting">Hi! I'm Sage.</p>
+      <div class="bio-body">
+        <p>A <span class="sage-age">14</span>-year-old author, singer-songwriter, and full-time adventurer currently living on a sailboat exploring the Caribbean Sea. Originally from Southern California and Bend, Oregon.</p>
+        <p>For the past three years I've been exploring new places, writing fantasy novels, and making music along the way. When I'm not dreaming up magical worlds, you'll find me free diving, playing guitar, writing songs, or hanging out with my friends.</p>
       </div>
     </div>
+  </section>
 
-    </div><!-- /support-grid -->
+  <!-- FEATURE CARDS -->
+  <div class="section-header">
+    <h2>What I'm <span>creating</span></h2>
+    <p>Music, stories, and adventures from the Caribbean Sea</p>
+  </div>
 
-  </div><!-- /support-wrap -->
+  <div class="cards">
+    <a class="card card-music" href="/music/index.html">
+      <span class="card-icon">🎵</span>
+      <div class="card-title">Music</div>
+      <p class="card-desc">Original songs written and recorded on the boat — from tropical sunsets to deep ocean thoughts.</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a class="card card-books" href="/books/index.html">
+      <span class="card-icon">📚</span>
+      <div class="card-title">Books</div>
+      <p class="card-desc"><em>The Emerald Jaguar</em> — Book one of a five-part fantasy adventure series.</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a class="card card-blog" href="/blog/index.html">
+      <span class="card-icon">📰</span>
+      <div class="card-title">Blog</div>
+      <p class="card-desc">Stories from the sea — new islands, wild weather, and life aboard a catamaran in the Caribbean.</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a class="card card-events" href="/events/index.html">
+      <span class="card-icon">🗓️</span>
+      <div class="card-title">Events</div>
+      <p class="card-desc">Upcoming performances, book signings, and appearances. Come say hi!</p>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
 
   <div id="footer-placeholder"></div>
   <script src="/assets/js/nav.js"></script>
-
-  <script>
-    const SUBSTACK_PUB = 'sagesedivec'; // ← update once account is live
-
-    function copyToClipboard(text, btn) {
-      navigator.clipboard.writeText(text).then(() => {
-        btn.classList.add('copied');
-        setTimeout(() => btn.classList.remove('copied'), 2500);
-      });
-    }
-
-    async function subscribeSupport(btn) {
-      const input = btn.previousElementSibling;
-      const email = input.value.trim();
-
-      if (!email || !email.includes('@')) {
-        input.style.borderColor = 'var(--pink-dark)';
-        input.focus();
-        return;
-      }
-
-      const originalText = btn.textContent;
-      btn.textContent = '…';
-      btn.disabled    = true;
-      input.disabled  = true;
-
-      try {
-        const res = await fetch(`https://${SUBSTACK_PUB}.substack.com/api/v1/free`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email:          email,
-            first_url:      window.location.href,
-            first_referrer: document.referrer || '',
-          }),
-        });
-
-        if (res.ok || res.status === 200) {
-          input.value           = '';
-          btn.textContent       = '✓ Check your email!';
-          btn.style.background  = '#1a8f5a';
-          setTimeout(() => {
-            btn.textContent      = originalText;
-            btn.style.background = '';
-            btn.disabled         = false;
-            input.disabled       = false;
-          }, 4000);
-        } else {
-          throw new Error();
-        }
-      } catch {
-        window.open(
-          `https://${SUBSTACK_PUB}.substack.com/subscribe?email=${encodeURIComponent(email)}`,
-          '_blank'
-        );
-        btn.textContent = originalText;
-        btn.disabled    = false;
-        input.disabled  = false;
-      }
-    }
-  </script>
 </body>
 </html>
