@@ -211,14 +211,16 @@ applyAge();
   });
 })();
 
-/* ── Newsletter form — uses Substack's native embed form
-   Substack blocks CORS so we can't use fetch() from external
-   domains. Instead we submit directly to Substack's endpoint
-   using a hidden form POST — no redirect, no new tab.
+/* ── Newsletter form — proxied via Cloudflare Worker ─────────
+   The Worker at WORKER_URL handles the Substack API call
+   server-side, bypassing CORS restrictions.
+   TODO: after deploying the worker, replace WORKER_URL with
+   your actual worker URL from the Cloudflare dashboard.
    ---------------------------------------------------------- */
-const SUBSTACK_PUB = 'sagesedivec'; // ← update if slug changes
+const WORKER_URL   = 'https://substack-subscribe.petersedivec.workers.dev';
+const SUBSTACK_PUB = 'sagesedivec';
 
-function subscribeToNewsletter(input, btn) {
+async function subscribeToNewsletter(input, btn) {
   const email = input.value.trim();
 
   if (!email || !email.includes('@')) {
@@ -228,53 +230,45 @@ function subscribeToNewsletter(input, btn) {
   }
 
   const originalText = btn.textContent;
+  btn.textContent    = '…';
+  btn.disabled       = true;
+  input.disabled     = true;
 
-  // Build a hidden form that POSTs directly to Substack
-  const form   = document.createElement('form');
-  form.method  = 'POST';
-  form.action  = `https://${SUBSTACK_PUB}.substack.com/api/v1/free`;
-  form.target  = 'substack-frame'; // post into hidden iframe — no redirect
-  form.style.display = 'none';
+  try {
+    const res = await fetch(WORKER_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ email }),
+    });
 
-  const emailField   = document.createElement('input');
-  emailField.name    = 'email';
-  emailField.value   = email;
+    const data = await res.json();
 
-  const referrerField  = document.createElement('input');
-  referrerField.name   = 'first_url';
-  referrerField.value  = window.location.href;
+    if (data.success) {
+      input.value           = '';
+      input.style.borderColor = '';
+      btn.textContent       = '✓ Check your email!';
+      btn.style.background  = '#1a8f5a';
+      setTimeout(() => {
+        btn.textContent      = originalText;
+        btn.style.background = '';
+        btn.disabled         = false;
+        input.disabled       = false;
+      }, 5000);
+    } else {
+      throw new Error(data.error || 'Unknown error');
+    }
 
-  form.appendChild(emailField);
-  form.appendChild(referrerField);
-  document.body.appendChild(form);
-
-  // Hidden iframe absorbs the POST response
-  let iframe = document.getElementById('substack-frame');
-  if (!iframe) {
-    iframe        = document.createElement('iframe');
-    iframe.name   = 'substack-frame';
-    iframe.id     = 'substack-frame';
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+  } catch (err) {
+    console.error('Subscribe error:', err);
+    // Fallback — open Substack subscribe page
+    window.open(
+      `https://${SUBSTACK_PUB}.substack.com/subscribe?email=${encodeURIComponent(email)}`,
+      '_blank'
+    );
+    btn.textContent = originalText;
+    btn.disabled    = false;
+    input.disabled  = false;
   }
-
-  form.submit();
-  document.body.removeChild(form);
-
-  // Optimistic success UI
-  input.value           = '';
-  input.style.borderColor = '';
-  input.disabled        = true;
-  btn.textContent       = '✓ Check your email!';
-  btn.style.background  = '#1a8f5a';
-  btn.disabled          = true;
-
-  setTimeout(() => {
-    btn.textContent      = originalText;
-    btn.style.background = '';
-    btn.disabled         = false;
-    input.disabled       = false;
-  }, 5000);
 }
 
 (function initNewsletter() {
@@ -284,11 +278,9 @@ function subscribeToNewsletter(input, btn) {
     if (!btn || !input) return;
 
     btn.addEventListener('click', () => subscribeToNewsletter(input, btn));
-
     input.addEventListener('keydown', e => {
       if (e.key === 'Enter') subscribeToNewsletter(input, btn);
     });
-
     input.addEventListener('input', () => {
       input.style.borderColor = '';
     });

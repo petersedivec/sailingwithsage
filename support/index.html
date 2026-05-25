@@ -363,6 +363,7 @@
   <script src="/assets/js/nav.js"></script>
 
   <script>
+    const WORKER_URL   = 'https://substack-subscribe.petersedivec.workers.dev';
     const SUBSTACK_PUB = 'sagesedivec';
 
     function copyToClipboard(text, btn) {
@@ -372,7 +373,7 @@
       });
     }
 
-    function subscribeSupport(btn) {
+    async function subscribeSupport(btn) {
       const input = btn.previousElementSibling;
       const email = input.value.trim();
 
@@ -383,48 +384,41 @@
       }
 
       const originalText = btn.textContent;
+      btn.textContent    = '…';
+      btn.disabled       = true;
+      input.disabled     = true;
 
-      const form   = document.createElement('form');
-      form.method  = 'POST';
-      form.action  = `https://${SUBSTACK_PUB}.substack.com/api/v1/free`;
-      form.target  = 'substack-frame';
-      form.style.display = 'none';
+      try {
+        const res  = await fetch(WORKER_URL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email }),
+        });
+        const data = await res.json();
 
-      const emailField  = document.createElement('input');
-      emailField.name   = 'email';
-      emailField.value  = email;
-      const urlField    = document.createElement('input');
-      urlField.name     = 'first_url';
-      urlField.value    = window.location.href;
-
-      form.appendChild(emailField);
-      form.appendChild(urlField);
-      document.body.appendChild(form);
-
-      let iframe = document.getElementById('substack-frame');
-      if (!iframe) {
-        iframe        = document.createElement('iframe');
-        iframe.name   = 'substack-frame';
-        iframe.id     = 'substack-frame';
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
+        if (data.success) {
+          input.value           = '';
+          btn.textContent       = '✓ Check your email!';
+          btn.style.background  = '#1a8f5a';
+          btn.disabled          = true;
+          setTimeout(() => {
+            btn.textContent      = originalText;
+            btn.style.background = '';
+            btn.disabled         = false;
+            input.disabled       = false;
+          }, 5000);
+        } else {
+          throw new Error(data.error);
+        }
+      } catch {
+        window.open(
+          `https://${SUBSTACK_PUB}.substack.com/subscribe?email=${encodeURIComponent(email)}`,
+          '_blank'
+        );
+        btn.textContent = originalText;
+        btn.disabled    = false;
+        input.disabled  = false;
       }
-
-      form.submit();
-      document.body.removeChild(form);
-
-      input.value           = '';
-      input.disabled        = true;
-      btn.textContent       = '✓ Check your email!';
-      btn.style.background  = '#1a8f5a';
-      btn.disabled          = true;
-
-      setTimeout(() => {
-        btn.textContent      = originalText;
-        btn.style.background = '';
-        btn.disabled         = false;
-        input.disabled       = false;
-      }, 5000);
     }
   </script>
 </body>
