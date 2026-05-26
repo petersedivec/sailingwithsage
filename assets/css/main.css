@@ -305,13 +305,15 @@ nav {
 /* ------------------------------------------------------------
    BUTTONS
    ------------------------------------------------------------ */
-.btn-pink {
+.btn-pink,
+.btn-pink:visited,
+.btn-pink:hover {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
   background: var(--pink);
-  color: #fff;
+  color: #fff !important;
   border-radius: var(--radius-pill);
   font-family: 'Rubik', sans-serif;
   font-weight: 500;
@@ -319,6 +321,7 @@ nav {
   border: none;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
+  text-decoration: none;
 }
 
 .btn-pink:hover {
@@ -326,19 +329,21 @@ nav {
   transform: translateY(-1px);
 }
 
-.btn-outline {
+.btn-outline,
+.btn-outline:visited {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
   background: transparent;
-  color: var(--pink);
+  color: var(--pink) !important;
   border-radius: var(--radius-pill);
   font-family: 'Rubik', sans-serif;
   font-weight: 500;
   font-size: 14px;
   border: 2px solid var(--pink-light);
   transition: all 0.2s;
+  text-decoration: none;
 }
 
 .btn-outline:hover {
@@ -515,16 +520,14 @@ nav {
   overflow: hidden;
   background: #fff;
   border: 1.5px solid var(--pink-light);
-  /* Height clips to just the input + button row */
-  height: 60px;
+  height: 55px;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 .substack-embed-wrap iframe {
   display: block;
-  /* Push the iframe up to hide the publication title */
-  margin-top: -148px;
+  margin-top: -150px;
   height: 280px;
   overflow: hidden;
 }
