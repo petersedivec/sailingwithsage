@@ -218,7 +218,7 @@ applyAge();
    your actual worker URL from the Cloudflare dashboard.
    ---------------------------------------------------------- */
 const WORKER_URL   = 'https://substack-subscribe.petersedivec.workers.dev';
-const SUBSTACK_PUB = 'sagesedivec';
+const SUBSTACK_PUB = 'sailingwithsage';
 
 async function subscribeToNewsletter(input, btn) {
   const email = input.value.trim();
