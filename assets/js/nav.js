@@ -125,9 +125,15 @@ const FOOTER_HTML = `
 <section class="newsletter">
   <h3>Stay in the <span>loop</span> 🎶</h3>
   <p>New music, book updates, and ocean adventures — straight to your inbox.</p>
-  <div class="newsletter-form">
-    <input type="email" placeholder="your@email.com" aria-label="Email address">
-    <button type="button">Subscribe</button>
+  <div class="substack-embed-wrap">
+    <iframe
+      src="https://sailingwithsage.substack.com/embed"
+      width="100%"
+      height="90"
+      style="border:none; background:transparent;"
+      frameborder="0"
+      scrolling="no">
+    </iframe>
   </div>
 </section>
 
@@ -217,7 +223,7 @@ applyAge();
    TODO: after deploying the worker, replace WORKER_URL with
    your actual worker URL from the Cloudflare dashboard.
    ---------------------------------------------------------- */
-const WORKER_URL   = 'https://substack-subscribe.petersedivec.workers.dev';
+const WORKER_URL   = 'https://substack-subscribe.YOUR_SUBDOMAIN.workers.dev';
 const SUBSTACK_PUB = 'sailingwithsage';
 
 async function subscribeToNewsletter(input, btn) {

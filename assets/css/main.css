@@ -507,6 +507,16 @@ nav {
 
 .newsletter-form button:hover { background: var(--pink-dark); }
 
+/* Substack iframe embed wrapper */
+.substack-embed-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  border: 1.5px solid var(--pink-light);
+}
+
 /* ------------------------------------------------------------
    FOOTER
    ------------------------------------------------------------ */
