@@ -382,7 +382,7 @@
        TODO: update SUBSTACK_URL to the actual Substack publication
              URL once the account is set up.
        ─────────────────────────────────────────────────────────── */
-    const WORKER_URL   = 'https://substack-subscribe.petersedivec.workers.dev';
+    const BLOG_WORKER_URL = 'https://substack-subscribe.petersedivec.workers.dev';
     const SUBSTACK_URL = 'https://sailingwithsage.substack.com/feed';
 
     async function loadPosts() {
@@ -390,7 +390,7 @@
 
       try {
         // Fetch RSS via Worker to avoid CORS block
-        const res  = await fetch(`${WORKER_URL}/feed`);
+        const res  = await fetch(`${BLOG_WORKER_URL}/feed`);
         const text = await res.text();
         const xml  = new DOMParser().parseFromString(text, 'text/xml');
         const items = Array.from(xml.querySelectorAll('item')).slice(0, 5);
