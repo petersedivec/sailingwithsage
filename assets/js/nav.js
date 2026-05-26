@@ -129,7 +129,7 @@ const FOOTER_HTML = `
     <iframe
       src="https://sailingwithsage.substack.com/embed"
       width="100%"
-      height="90"
+      height="280"
       style="border:none; background:transparent;"
       frameborder="0"
       scrolling="no">
@@ -224,7 +224,7 @@ applyAge();
    your actual worker URL from the Cloudflare dashboard.
    ---------------------------------------------------------- */
 const WORKER_URL   = 'https://substack-subscribe.YOUR_SUBDOMAIN.workers.dev';
-const SUBSTACK_PUB = 'sailingwithsage';
+const SUBSTACK_PUB = 'sagesedivec';
 
 async function subscribeToNewsletter(input, btn) {
   const email = input.value.trim();

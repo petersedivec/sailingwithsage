@@ -515,6 +515,18 @@ nav {
   overflow: hidden;
   background: #fff;
   border: 1.5px solid var(--pink-light);
+  /* Height clips to just the input + button row */
+  height: 60px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.substack-embed-wrap iframe {
+  display: block;
+  /* Push the iframe up to hide the publication title */
+  margin-top: -148px;
+  height: 280px;
+  overflow: hidden;
 }
 
 /* ------------------------------------------------------------
