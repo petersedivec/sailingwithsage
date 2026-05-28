@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search — Sage Sedivec</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Londrina+Shadow&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/main.css">
+
+  <style>
+    .search-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 48px 80px;
+    }
+
+    .search-box-wrap {
+      position: relative;
+      margin-bottom: 36px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 52px 16px 20px;
+      border: 2px solid var(--pink-light);
+      border-radius: var(--radius-pill);
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--dark);
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(255,105,180,0.1);
+    }
+
+    .search-icon-btn {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 18px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* Results */
+    .search-results { display: flex; flex-direction: column; gap: 12px; }
+
+    .search-result {
+      display: block;
+      padding: 20px 24px;
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+    }
+
+    .search-result:hover {
+      border-color: var(--pink);
+      box-shadow: 0 4px 20px rgba(255,105,180,0.12);
+      transform: translateY(-2px);
+    }
+
+    .result-title {
+      font-family: 'Londrina Shadow', cursive;
+      font-size: 24px;
+      color: var(--pink-dark);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .result-desc {
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .result-url {
+      font-family: 'Rubik', sans-serif;
+      font-size: 12px;
+      color: var(--pink);
+      font-weight: 500;
+    }
+
+    /* States */
+    .search-empty {
+      text-align: center;
+      padding: 48px 24px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 15px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .search-empty-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+
+    .search-hint {
+      font-family: 'Rubik', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    /* Quick links shown before search */
+    .quick-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #fff;
+      border: 1.5px solid var(--pink-light);
+      border-radius: 10px;
+      text-decoration: none;
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--dark);
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .quick-link:hover { border-color: var(--pink); background: var(--pink-pale); }
+
+    @media (max-width: 600px) {
+      .search-wrap { padding: 40px 20px 64px; }
+      .quick-links { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="nav-placeholder"></div>
+
+  <section class="hero-sm">
+    <h1 class="hero-name">Search</h1>
+    <p class="hero-tagline">Find anything on the site</p>
+  </section>
+
+  <div class="search-wrap">
+
+    <div class="search-box-wrap">
+      <input
+        class="search-input"
+        id="search-input"
+        type="search"
+        placeholder="Search for music, books, blog posts…"
+        autocomplete="off"
+        autofocus>
+      <button class="search-icon-btn" aria-label="Search">🔍</button>
+    </div>
+
+    <p class="search-hint" id="search-hint">Try "music", "Emerald Jaguar", "blog", "tip"…</p>
+
+    <div class="search-results" id="search-results"></div>
+
+    <!-- Quick links shown before any search -->
+    <div id="quick-links-wrap">
+      <div class="quick-links">
+        <a class="quick-link" href="/music/index.html">🎵 Music</a>
+        <a class="quick-link" href="/books/index.html">📚 Books</a>
+        <a class="quick-link" href="/blog/index.html">📰 Blog</a>
+        <a class="quick-link" href="/events/index.html">🗓️ Events</a>
+        <a class="quick-link" href="/support/index.html">💝 Support</a>
+        <a class="quick-link" href="/about/index.html">👋 About</a>
+        <a class="quick-link" href="/about/qa.html">❓ Q&amp;A</a>
+        <a class="quick-link" href="/about/contact.html">✉️ Contact</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <script src="/assets/js/nav.js"></script>
+
+  <script>
+    /* ── Site index ─────────────────────────────────────────────────
+       Add keywords relevant to each page so search finds them.
+       ─────────────────────────────────────────────────────────── */
+    const SITE_INDEX = [
+      {
+        title: 'Home',
+        url:   '/',
+        desc:  'Singer-Songwriter, Author & Boat Kid — sailing the Caribbean',
+        tags:  'sage sedivec home about boat caribbean sailboat adventurer',
+      },
+      {
+        title: 'Music',
+        url:   '/music/index.html',
+        desc:  'Original songs and covers by Sage — written and recorded on the boat',
+        tags:  'music songs guitar piano ukulele songwriting original covers acoustic',
+      },
+      {
+        title: 'Songs',
+        url:   '/music/songs/index.html',
+        desc:  'Browse all of Sage\'s original songs and covers from Instagram',
+        tags:  'songs originals covers instagram reel listen strangers best friends soul sisters destroyed',
+      },
+      {
+        title: 'Books',
+        url:   '/books/index.html',
+        desc:  'Sage\'s fantasy novels — The Emerald Jaguar and more coming soon',
+        tags:  'books writing fantasy novels author published apple blossom academy',
+      },
+      {
+        title: 'The Emerald Jaguar',
+        url:   '/books/the-emerald-jaguar/index.html',
+        desc:  'Guardians of the Secret Isles Book 1 — middle grade fantasy published June 2025',
+        tags:  'emerald jaguar guardians secret isles gotsi book 1 fantasy amazon buy middle grade',
+      },
+      {
+        title: 'Blog',
+        url:   '/blog/index.html',
+        desc:  'Stories from the sea — islands, weather, and life aboard a catamaran',
+        tags:  'blog stories sea sailing catamaran caribbean substack newsletter',
+      },
+      {
+        title: 'Events',
+        url:   '/events/index.html',
+        desc:  'Upcoming performances, book signings, and appearances',
+        tags:  'events performances shows book signing appearances calendar',
+      },
+      {
+        title: 'Support Sage',
+        url:   '/support/index.html',
+        desc:  'Buy her book, listen to her music, spread the word, or leave a tip',
+        tags:  'support tip donate buy book music instagram tiktok spread word',
+      },
+      {
+        title: 'Leave a Tip',
+        url:   '/support/tip.html',
+        desc:  'Support Sage with a tip via PayPal or Stripe',
+        tags:  'tip donate paypal stripe money support',
+      },
+      {
+        title: 'About Sage',
+        url:   '/about/index.html',
+        desc:  'About Sage — singer-songwriter, author, and boat kid from California',
+        tags:  'about sage sedivec biography bio california bend oregon boat kid homeschool',
+      },
+      {
+        title: 'Q&A',
+        url:   '/about/qa.html',
+        desc:  'Questions and answers about Sage\'s music, books, and life',
+        tags:  'qa questions answers music books writing personal creative process instruments ukulele guitar piano',
+      },
+      {
+        title: 'Contact',
+        url:   '/about/contact.html',
+        desc:  'Get in touch with Sage — questions, fan mail, or bookings',
+        tags:  'contact email message booking reach out',
+      },
+    ];
+
+    const input        = document.getElementById('search-input');
+    const resultsEl    = document.getElementById('search-results');
+    const hintEl       = document.getElementById('search-hint');
+    const quickWrap    = document.getElementById('quick-links-wrap');
+
+    function search(query) {
+      const q = query.trim().toLowerCase();
+
+      if (!q) {
+        resultsEl.innerHTML = '';
+        hintEl.style.display = '';
+        quickWrap.style.display = '';
+        return;
+      }
+
+      hintEl.style.display  = 'none';
+      quickWrap.style.display = 'none';
+
+      const matches = SITE_INDEX.filter(page => {
+        const haystack = `${page.title} ${page.desc} ${page.tags}`.toLowerCase();
+        return q.split(' ').every(word => haystack.includes(word));
+      });
+
+      if (!matches.length) {
+        resultsEl.innerHTML = `
+          <div class="search-empty">
+            <span class="search-empty-icon">🌊</span>
+            <p>No results for "<strong>${query}</strong>"</p>
+          </div>`;
+        return;
+      }
+
+      resultsEl.innerHTML = matches.map(page => `
+        <a class="search-result" href="${page.url}">
+          <div class="result-title">${page.title}</div>
+          <div class="result-desc">${page.desc}</div>
+          <div class="result-url">sailingwithsage.com${page.url}</div>
+        </a>`).join('');
+    }
+
+    input.addEventListener('input', () => search(input.value));
+
+    /* Pre-fill from URL param e.g. /search?q=music */
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('q')) {
+      input.value = params.get('q');
+      search(params.get('q'));
+    }
+  </script>
+</body>
+</html>

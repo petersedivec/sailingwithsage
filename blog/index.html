@@ -346,8 +346,19 @@
       </div>
     </div>
 
+    <!-- ── RECENT POSTS (from Substack RSS) ── -->
+    <div class="blog-recent">
+      <h2>Recent posts</h2>
+      <div class="blog-posts" id="blog-posts-list">
+        <!-- Skeletons shown while loading -->
+        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+      </div>
+    </div>
+
     <!-- ── SUBSTACK CTA ── -->
-    <div class="blog-substack">
+    <div class="blog-substack" style="margin-top: 48px;">
       <h2>Read the full blog on Substack</h2>
       <p>All posts, archives, and the free newsletter — in one place.</p>
       <div class="blog-substack-btns">
@@ -357,17 +368,6 @@
         <a class="btn-white-outline" href="https://sailingwithsage.substack.com/subscribe" target="_blank" rel="noopener">
           ✉️ Subscribe free
         </a>
-      </div>
-    </div>
-
-    <!-- ── RECENT POSTS (from Substack RSS) ── -->
-    <div class="blog-recent">
-      <h2>Recent posts</h2>
-      <div class="blog-posts" id="blog-posts-list">
-        <!-- Skeletons shown while loading -->
-        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
-        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
-        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
       </div>
     </div>
 
@@ -383,13 +383,12 @@
              URL once the account is set up.
        ─────────────────────────────────────────────────────────── */
     const BLOG_WORKER_URL = 'https://substack-subscribe.petersedivec.workers.dev';
-    const SUBSTACK_URL = 'https://sailingwithsage.substack.com/feed';
+    const SUBSTACK_URL    = 'https://sailingwithsage.substack.com/feed';
 
     async function loadPosts() {
       const list = document.getElementById('blog-posts-list');
 
       try {
-        // Fetch RSS via Worker to avoid CORS block
         const res  = await fetch(`${BLOG_WORKER_URL}/feed`);
         const text = await res.text();
         const xml  = new DOMParser().parseFromString(text, 'text/xml');

@@ -70,7 +70,7 @@ const NAV_HTML = `
       </li>
     </ul>
 
-    <button class="nav-search" aria-label="Search">🔍</button>
+    <button class="nav-search" aria-label="Search" onclick="window.location='/search/index.html'">🔍</button>
 
     <!-- Hamburger button (mobile only) -->
     <button class="hamburger" aria-label="Open menu" aria-expanded="false" id="hamburger-btn">
