@@ -449,11 +449,12 @@ nav {
 .card-music .card-arrow { color: #fff; }
 
 /* ------------------------------------------------------------
-   NEWSLETTER SIGNUP STRIP (appears on every page in footer)
+   NEWSLETTER SIGNUP STRIP
    ------------------------------------------------------------ */
 .newsletter {
-  background: var(--pink-pale);
-  border-top: 2px solid var(--pink-light);
+  background: #fff;
+  border-top: 4px solid var(--pink);
+  border-bottom: 2px solid var(--pink-light);
   padding: 56px 48px;
   text-align: center;
 }
@@ -516,11 +517,10 @@ nav {
 .substack-embed-wrap {
   max-width: 480px;
   margin: 0 auto;
-  border-radius: 12px;
   overflow: hidden;
-  background: #fff;
-  border: 1.5px solid var(--pink-light);
-  height: 55px;
+  background: transparent;
+  border: none;
+  height: 52px;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
