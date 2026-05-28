@@ -181,7 +181,8 @@
       background: #fff;
       border: 1.5px solid var(--pink-light);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 0;
+      overflow: hidden;
       text-decoration: none;
       color: inherit;
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
@@ -193,7 +194,27 @@
       transform: translateY(-2px);
     }
 
-    .blog-post-num {
+    /* Image thumbnail — shown when post has a cover image */
+    .blog-post-img {
+      flex-shrink: 0;
+      width: 110px;
+      align-self: stretch;
+      overflow: hidden;
+      background: var(--pink-pale);
+    }
+
+    .blog-post-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Inner content padding */
+    .blog-post-body {
+      flex: 1;
+      padding: 20px 0;
+    }
       font-family: 'Londrina Shadow', cursive;
       font-size: 32px;
       color: var(--pink-light);
@@ -205,7 +226,10 @@
       padding-top: 2px;
     }
 
-    .blog-post-body { flex: 1; }
+    .blog-post-body {
+      flex: 1;
+      padding: 20px 0;
+    }
 
     .blog-post-title {
       font-family: 'Rubik', sans-serif;
@@ -236,7 +260,7 @@
       flex-shrink: 0;
       color: var(--pink-light);
       font-size: 20px;
-      padding-top: 2px;
+      padding: 20px 20px 0 0;
       transition: color 0.2s, transform 0.2s;
     }
 
@@ -351,9 +375,9 @@
       <h2>Recent posts</h2>
       <div class="blog-posts" id="blog-posts-list">
         <!-- Skeletons shown while loading -->
-        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
-        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
-        <div class="blog-post-skel"><div class="skel-num"></div><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
+        <div class="blog-post-skel"><div class="skel-body"><div class="skel-title"></div><div class="skel-line"></div><div class="skel-line short"></div></div></div>
       </div>
     </div>
 
@@ -377,21 +401,34 @@
   <script src="/assets/js/nav.js"></script>
 
   <script>
-    /* ── Load recent posts from Substack RSS via rss2json ──────────
-       rss2json.com is a free public RSS→JSON proxy.
-       TODO: update SUBSTACK_URL to the actual Substack publication
-             URL once the account is set up.
-       ─────────────────────────────────────────────────────────── */
     const BLOG_WORKER_URL = 'https://substack-subscribe.petersedivec.workers.dev';
     const SUBSTACK_URL    = 'https://sailingwithsage.substack.com/feed';
+
+    function extractImage(item, descHtml) {
+      // 1. Try <media:content> or <media:thumbnail>
+      const media = item.querySelector('content, thumbnail');
+      if (media?.getAttribute('url')) return media.getAttribute('url');
+
+      // 2. Try <enclosure>
+      const enc = item.querySelector('enclosure');
+      if (enc?.getAttribute('url')) return enc.getAttribute('url');
+
+      // 3. Parse description HTML for first <img>
+      const div = document.createElement('div');
+      div.innerHTML = descHtml;
+      const img = div.querySelector('img');
+      if (img?.src) return img.src;
+
+      return null;
+    }
 
     async function loadPosts() {
       const list = document.getElementById('blog-posts-list');
 
       try {
-        const res  = await fetch(`${BLOG_WORKER_URL}/feed`);
-        const text = await res.text();
-        const xml  = new DOMParser().parseFromString(text, 'text/xml');
+        const res   = await fetch(`${BLOG_WORKER_URL}/feed`);
+        const text  = await res.text();
+        const xml   = new DOMParser().parseFromString(text, 'text/xml');
         const items = Array.from(xml.querySelectorAll('item')).slice(0, 5);
 
         if (!items.length) throw new Error('No posts');
@@ -403,10 +440,13 @@
           const pubDate = item.querySelector('pubDate')?.textContent || '';
           const desc    = item.querySelector('description')?.textContent || '';
 
-          // Strip HTML from description
+          // Extract image
+          const imgUrl  = extractImage(item, desc);
+
+          // Strip HTML from description for excerpt
           const div = document.createElement('div');
           div.innerHTML = desc;
-          const excerpt = (div.textContent || '').slice(0, 120).trim() + '…';
+          const excerpt = (div.textContent || '').slice(0, 140).trim() + '…';
 
           const date = pubDate ? new Date(pubDate).toLocaleDateString('en-US', {
             month: 'long', day: 'numeric', year: 'numeric'
@@ -417,8 +457,9 @@
           card.href      = link;
           card.target    = '_blank';
           card.rel       = 'noopener noreferrer';
+
           card.innerHTML = `
-            <div class="blog-post-num">${String(i + 1).padStart(2, '0')}</div>
+            ${imgUrl ? `<div class="blog-post-img"><img src="${imgUrl}" alt="${title}" loading="lazy"></div>` : ''}
             <div class="blog-post-body">
               <div class="blog-post-title">${title}</div>
               <div class="blog-post-excerpt">${excerpt}</div>
