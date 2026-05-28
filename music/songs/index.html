@@ -91,7 +91,7 @@
     /* Thumbnail */
     .song-thumb {
       position: relative;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 2 / 3;
       overflow: hidden;
       background: var(--pink-pale);
     }
@@ -328,23 +328,17 @@
       a.target    = '_blank';
       a.rel       = 'noopener noreferrer';
       a.style.transitionDelay = (idx * 0.06) + 's';
-      a.setAttribute('aria-label', `Watch on Instagram — ${fmtDate(post.timestamp)}`);
+      a.setAttribute('aria-label', 'Watch on Instagram');
 
       const img = post.thumbnail || post.media_url || '';
       a.innerHTML = `
         <div class="song-thumb">
-          <img src="${img}" alt="Song posted ${fmtDate(post.timestamp)}" loading="lazy">
+          <img src="${img}" alt="Song by Sage" loading="lazy">
           <div class="song-overlay">
             <div class="play-ring">
               <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
             </div>
             <span class="overlay-label">Watch on Instagram</span>
-          </div>
-        </div>
-        <div class="song-info">
-          <div class="song-date">
-            <span class="meta-dot"></span>
-            ${fmtDate(post.timestamp)}
           </div>
         </div>`;
       return a;
