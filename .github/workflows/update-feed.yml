@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write    # commit posts.json + images
-  secrets: write     # update token secret after refresh
 
 jobs:
   fetch:
@@ -30,14 +29,6 @@ jobs:
         env:
           INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
         run: python scripts/fetch_posts.py
-
-      - name: Update token secret (if refreshed)
-        if: env.NEW_ACCESS_TOKEN != ''
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh secret set INSTAGRAM_ACCESS_TOKEN --body "$NEW_ACCESS_TOKEN"
-          echo "✓ Secret updated with refreshed token."
 
       - name: Commit changes
         run: |
