@@ -8,15 +8,15 @@ Runs daily via GitHub Actions.
 
 1. Refreshes the long-lived access token (valid 60 days)
 2. Fetches all recent posts from the Instagram Graph API
-3. Filters to ONLY posts tagged #original-song or #cover-song
+3. Filters to ONLY posts tagged #originalsong or #coversong
    — all other posts (performances, general content, etc.) are excluded
 4. Downloads cover thumbnails to music/songs/images/<id>.jpg
 5. Writes music/songs/posts.json with a 'type' field on each post
    ('original' or 'cover')
 
 Tagging convention for @songs.by.sage Instagram posts:
-  #original-song  → appears in the Originals section of the songs page
-  #cover-song     → appears in the Covers section of the songs page
+  #originalsong  → appears in the Originals section of the songs page
+  #coversong     → appears in the Covers section of the songs page
   (no tag)        → excluded from the songs page entirely
 """
 
@@ -43,8 +43,8 @@ IMG_DIR  = ROOT / "music" / "songs" / "images"
 JSON_OUT = ROOT / "music" / "songs" / "posts.json"
 
 # ── Hashtag constants ─────────────────────────────────────────────────────────
-TAG_ORIGINAL = "#original-song"
-TAG_COVER    = "#cover-song"
+TAG_ORIGINAL = "#originalsong"
+TAG_COVER    = "#coversong"
 
 
 # ── Token refresh ─────────────────────────────────────────────────────────────
@@ -100,8 +100,8 @@ def get_post_type(post: dict) -> str | None:
     Return 'original', 'cover', or None.
 
     Rules:
-      - Caption must contain #original-song → 'original'
-      - Caption must contain #cover-song    → 'cover'
+      - Caption must contain #originalsong → 'original'
+      - Caption must contain #coversong    → 'cover'
       - Neither tag present                 → None (excluded from songs page)
       - If both tags present (shouldn't happen), 'original' wins
     """
@@ -194,7 +194,7 @@ def main():
         })
 
     print(f"\n  Included: {len(tagged_posts)} song posts")
-    print(f"  Skipped:  {skipped} non-song posts (no #original-song or #cover-song tag)")
+    print(f"  Skipped:  {skipped} non-song posts (no #originalsong or #coversong tag)")
 
     # 5. Write posts.json
     JSON_OUT.parent.mkdir(parents=True, exist_ok=True)
