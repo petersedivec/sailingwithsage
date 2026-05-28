@@ -88,6 +88,23 @@
     }
 
     /* Styled PayPal link (mirrors PayPal donate button look) */
+    .btn-venmo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 28px;
+      background: #008CFF;
+      color: #fff;
+      border-radius: var(--radius-pill);
+      font-family: 'Rubik', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-venmo:hover { background: #0070cc; transform: translateY(-1px); }
+    .btn-venmo:visited { color: #fff !important; }
+
     .btn-paypal {
       display: inline-flex;
       align-items: center;
@@ -180,6 +197,20 @@
 
     <div class="tip-options">
 
+      <!-- ── VENMO ── -->
+      <div class="tip-option">
+        <div class="tip-option-label">💚 Pay with Venmo</div>
+        <p>Send any amount via Venmo — quick and easy from your phone.</p>
+        <div class="paypal-btn-wrap">
+          <a class="btn-venmo"
+             href="https://venmo.com/u/Sage-Sedivec"
+             target="_blank"
+             rel="noopener">
+            💚 Pay with Venmo
+          </a>
+        </div>
+      </div>
+
       <!-- ── PAYPAL ── -->
       <div class="tip-option">
         <div class="tip-option-label">💙 Pay with PayPal</div>
@@ -196,8 +227,8 @@
 
       <!-- ── STRIPE ── -->
       <div class="tip-option">
-        <div class="tip-option-label">💜 Pay with Card</div>
-        <p>Prefer to pay by credit or debit card? Use Stripe — secure, fast, and simple.</p>
+        <div class="tip-option-label">💜 Tip with Card / Apple Pay / Google Pay</div>
+        <p>Pay by card, Apple Pay, or Google Pay via Stripe — secure and simple.</p>
         <div class="paypal-btn-wrap">
           <a class="btn-stripe" href="https://donate.stripe.com/dRmaEZ0vO8zDcbQ4Lt1Nu00" target="_blank" rel="noopener">
             💜 Pay by Card
