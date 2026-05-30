@@ -31,6 +31,34 @@ export default {
       return corsResponse(null, 204, origin);
     }
 
+    // ── Route: tip.sailingwithsage.com  →  redirect to tip page ──
+    const hostname = new URL(request.url).hostname;
+    if (hostname === 'tip.sailingwithsage.com') {
+      return Response.redirect('https://sailingwithsage.com/support/tip.html', 301);
+    }
+
+    // ── Route: GET /feed  →  proxy Substack RSS ───────────────────
+    if (request.method === 'GET' && new URL(request.url).pathname === '/feed') {
+      try {
+        const rss = await fetch(
+          `https://${SUBSTACK_PUB}.substack.com/feed`,
+          { headers: { 'User-Agent': 'sailingwithsage.com/1.0' } }
+        );
+        const xml     = await rss.text();
+        const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+        return new Response(xml, {
+          status: 200,
+          headers: {
+            'Content-Type':                'application/rss+xml',
+            'Access-Control-Allow-Origin': allowed,
+            'Cache-Control':               'public, max-age=300',
+          },
+        });
+      } catch (err) {
+        return new Response('Feed error', { status: 502 });
+      }
+    }
+
     // ── Only accept POST ──────────────────────────────────────────
     if (request.method !== 'POST') {
       return corsResponse({ error: 'Method not allowed' }, 405, origin);
@@ -70,21 +98,20 @@ export default {
         }
       );
 
-      // Substack returns 200 on success, sometimes 400 for dupe emails
+      const substackBody = await substackRes.text();
+      console.log('Substack status:', substackRes.status);
+      console.log('Substack response:', substackBody);
+
       if (substackRes.ok) {
-        return corsResponse({ success: true }, 200, origin);
+        return corsResponse({ success: true, debug: substackBody }, 200, origin);
       }
 
-      const errText = await substackRes.text();
-      console.error('Substack error:', substackRes.status, errText);
-
-      // 400 often means already subscribed — treat as success for UX
       if (substackRes.status === 400) {
-        return corsResponse({ success: true, note: 'already_subscribed' }, 200, origin);
+        return corsResponse({ success: true, note: 'already_subscribed', debug: substackBody }, 200, origin);
       }
 
       return corsResponse(
-        { error: 'Substack error', status: substackRes.status },
+        { error: 'Substack error', status: substackRes.status, debug: substackBody },
         502,
         origin
       );

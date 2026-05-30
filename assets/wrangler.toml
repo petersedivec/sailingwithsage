@@ -1,0 +1,9 @@
+name = "substack-subscribe"
+main = "worker.js"
+compatibility_date = "2026-05-25"
+
+# Custom domains handled by this worker
+[env.production]
+routes = [
+  { pattern = "tip.sailingwithsage.com/*", custom_domain = true }
+]

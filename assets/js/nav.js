@@ -8,6 +8,22 @@
      <script src="/assets/js/nav.js"></script>
    ============================================================ */
 
+/* ── Google Analytics ────────────────────────────────────────
+   Loads GA4 on every page automatically via nav.js
+   ---------------------------------------------------------- */
+(function initGA() {
+  const script = document.createElement('script');
+  script.async = true;
+  script.src   = 'https://www.googletagmanager.com/gtag/js?id=G-90JZVGZ3W3';
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', 'G-90JZVGZ3W3');
+})();
+
 /* ── Sage's age — auto-updates every May 1 ──────────────────
    Born May 1, 2012. Age increments each May 1.
    Usage in HTML: <span class="sage-age"></span>
