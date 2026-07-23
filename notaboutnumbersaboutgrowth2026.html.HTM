@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sage Artist Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --cream:#fbf5ee;
+    --paper:#fffaf3;
+    --ink:#3a2e2a;
+    --terracotta:#c4703f;
+    --sage:#8a9b7e;
+    --sage-dark:#5f6f54;
+    --gold:#d9a441;
+    --rose:#c76b6b;
+    --line:#e8ddcf;
+    --shadow: 0 4px 14px rgba(90,70,50,0.08);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    background: var(--cream);
+    color: var(--ink);
+    padding: 24px 16px 60px;
+  }
+  .wrap{ max-width: 980px; margin: 0 auto; }
+  header{ text-align:center; margin-bottom: 28px; }
+  header h1{
+    font-size: 2.3em;
+    margin: 0 0 4px;
+    letter-spacing: 0.5px;
+    color: var(--terracotta);
+  }
+  header p{
+    margin:0;
+    font-style: italic;
+    color: var(--sage-dark);
+    font-size: 1.05em;
+  }
+  .card{
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 22px 24px;
+    margin-bottom: 22px;
+  }
+  .card h2{
+    margin-top:0;
+    font-size: 1.25em;
+    color: var(--sage-dark);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+  form .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px,1fr));
+    gap: 14px 18px;
+  }
+  label{
+    display:block;
+    font-size: 0.85em;
+    color: var(--sage-dark);
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+  input[type=number], input[type=month], input[type=text], input[type=password], textarea{
+    width:100%;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95em;
+    background: #fff;
+    color: var(--ink);
+  }
+  textarea{ resize: vertical; min-height: 46px; }
+  .full{ grid-column: 1 / -1; }
+  .actions{ margin-top: 18px; display:flex; gap:10px; flex-wrap:wrap; }
+  button{
+    font-family: inherit;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+  }
+  button:active{ transform: scale(0.97); }
+  .btn-primary{ background: var(--terracotta); color: #fff; }
+  .btn-secondary{ background: var(--sage); color: #fff; }
+  .btn-ghost{ background: transparent; color: var(--sage-dark); border: 1px solid var(--sage); }
+  .btn-danger{ background: transparent; color: var(--rose); border: 1px solid var(--rose); font-size:0.8em; padding: 4px 10px;}
+  table{ width:100%; border-collapse: collapse; font-size: 0.85em; }
+  th, td{ text-align:left; padding: 8px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th{ color: var(--sage-dark); font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.03em; }
+  td.wrap-text, th.wrap-text{ white-space: normal; min-width: 160px; }
+  .table-scroll{ overflow-x:auto; }
+  .journal{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+    gap: 14px;
+  }
+  .journal-card{
+    background: #fff;
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+  }
+  .journal-card .month{ font-weight:bold; color: var(--terracotta); margin-bottom: 6px; font-size: 0.9em; }
+  .journal-card .lyric{ font-style: italic; margin: 6px 0; }
+  .journal-card .improved{ font-size: 0.9em; color: var(--sage-dark); }
+  .charts{ display:grid; grid-template-columns: repeat(auto-fit, minmax(360px,1fr)); gap: 20px; }
+  canvas{ max-height: 260px; }
+  .empty{ color: #a89a8a; font-style: italic; text-align:center; padding: 20px; }
+  .stamp{ text-align:center; color:#b3a48f; font-size:0.8em; margin-top: 30px; }
+  select.metric-picker{
+    padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); font-family: inherit;
+  }
+
+  /* --- password gate --- */
+  #gate{
+    position: fixed; inset: 0; background: var(--cream);
+    display:flex; align-items:center; justify-content:center;
+    z-index: 999; padding: 20px;
+  }
+  #gate .gate-card{
+    background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+    box-shadow: var(--shadow); padding: 32px 28px; max-width: 340px; width:100%; text-align:center;
+  }
+  #gate h1{ font-size: 1.5em; color: var(--terracotta); margin: 0 0 6px; }
+  #gate p{ color: var(--sage-dark); font-style: italic; margin: 0 0 18px; }
+  #gate input{ text-align:center; letter-spacing: 2px; margin-bottom: 12px; }
+  #gate button{ width:100%; }
+  #gate .err{ color: var(--rose); font-size: 0.85em; margin-top: 10px; min-height: 1.2em; }
+  #dashboard-content{ display:none; }
+  #dashboard-content.unlocked{ display:block; }
+  .lock-btn{ position: fixed; bottom: 16px; right: 16px; opacity: 0.6; font-size: 0.8em; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-card">
+    <h1>🔒 Sage's Dashboard</h1>
+    <p>Enter the password to view</p>
+    <form id="gate-form">
+      <input type="password" id="gate-password" autocomplete="off" placeholder="Password">
+      <button type="submit" class="btn-primary">Unlock</button>
+      <div class="err" id="gate-error"></div>
+    </form>
+  </div>
+</div>
+
+<div id="dashboard-content">
+<div class="wrap">
+  <header>
+    <h1>🎸 Sage Artist Dashboard</h1>
+    <p>Not about numbers. About growth.</p>
+  </header>
+
+  <div class="card">
+    <h2>This Month's Entry</h2>
+    <form id="entry-form">
+      <div class="grid">
+        <div>
+          <label for="month">Month</label>
+          <input type="month" id="month" required>
+        </div>
+        <div>
+          <label for="songsWritten">Songs Written</label>
+          <input type="number" min="0" id="songsWritten" value="0">
+        </div>
+        <div>
+          <label for="songsFinished">Songs Finished</label>
+          <input type="number" min="0" id="songsFinished" value="0">
+        </div>
+        <div>
+          <label for="livePerformances">Live Performances</label>
+          <input type="number" min="0" id="livePerformances" value="0">
+        </div>
+        <div>
+          <label for="guitarHours">Hours Practicing Guitar</label>
+          <input type="number" min="0" step="0.5" id="guitarHours" value="0">
+        </div>
+        <div>
+          <label for="writingHours">Hours Writing</label>
+          <input type="number" min="0" step="0.5" id="writingHours" value="0">
+        </div>
+        <div>
+          <label for="danceClasses">Dance Classes Attended</label>
+          <input type="number" min="0" id="danceClasses" value="0">
+        </div>
+        <div>
+          <label for="coversLearned">Covers Learned</label>
+          <input type="number" min="0" id="coversLearned" value="0">
+        </div>
+        <div>
+          <label for="recordingSessions">Recording Sessions Completed</label>
+          <input type="number" min="0" id="recordingSessions" value="0">
+        </div>
+        <div>
+          <label for="collaborations">Collaborations</label>
+          <input type="number" min="0" id="collaborations" value="0">
+        </div>
+        <div>
+          <label for="youtubeUploads">YouTube Uploads</label>
+          <input type="number" min="0" id="youtubeUploads" value="0">
+        </div>
+        <div>
+          <label for="tiktokUploads">TikTok Uploads</label>
+          <input type="number" min="0" id="tiktokUploads" value="0">
+        </div>
+        <div class="full">
+          <label for="favoriteLyric">Favorite Lyric Written This Month</label>
+          <textarea id="favoriteLyric" placeholder="&quot;...&quot;"></textarea>
+        </div>
+        <div class="full">
+          <label for="oneImprovement">One Thing I Improved</label>
+          <textarea id="oneImprovement" placeholder="e.g. my vibrato is steadier now"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn-primary">Save Month</button>
+        <button type="button" id="clear-form" class="btn-ghost">Clear Form</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Growth Trends</h2>
+    <div style="margin-bottom:14px;">
+      <label style="display:inline;margin-right:8px;">Compare metrics:</label>
+      <select class="metric-picker" id="metric1"></select>
+      <select class="metric-picker" id="metric2"></select>
+    </div>
+    <div class="charts">
+      <div><canvas id="chartMain"></canvas></div>
+      <div><canvas id="chartUploads"></canvas></div>
+    </div>
+    <p id="chart-empty" class="empty" style="display:none;">Save a few months of entries to see trends here.</p>
+  </div>
+
+  <div class="card">
+    <h2>Songwriter's Journal</h2>
+    <div id="journal" class="journal">
+      <p class="empty">Your favorite lyrics and monthly wins will show up here.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>History</h2>
+    <div class="table-scroll">
+      <table id="history-table">
+        <thead>
+          <tr>
+            <th>Month</th><th>Songs Written</th><th>Songs Finished</th><th>Live Perf.</th>
+            <th>Guitar Hrs</th><th>Writing Hrs</th><th>Dance Classes</th><th>Covers</th>
+            <th>Recording Sess.</th><th>Collabs</th><th>YouTube</th><th>TikTok</th><th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <p id="history-empty" class="empty">No entries yet — save your first month above.</p>
+    </div>
+    <div class="actions">
+      <button type="button" id="export-csv" class="btn-secondary">Export CSV</button>
+      <button type="button" id="import-csv" class="btn-ghost">Import CSV</button>
+      <input type="file" id="import-file" accept=".csv" style="display:none;">
+    </div>
+  </div>
+
+  <p class="stamp">Saved automatically in this browser. Export CSV regularly to back up.</p>
+</div>
+</div>
+
+<button type="button" class="lock-btn btn-ghost" id="lock-again" style="display:none;">Lock</button>
+
+<script>
+// ---- password gate ----
+// SHA-256 hash of the password, so it isn't stored in plain text in the page source.
+const GATE_HASH = 'aea27ad297988629c3fb643b30a78a87de4cc16ec970e55d6d57924fabd42a93';
+const GATE_STORAGE_KEY = 'sageDashUnlocked';
+
+async function sha256Hex(text){
+  const enc = new TextEncoder().encode(text);
+  const buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+function showDashboard(){
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('dashboard-content').classList.add('unlocked');
+  document.getElementById('lock-again').style.display = 'inline-block';
+}
+
+document.getElementById('gate-form').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const input = document.getElementById('gate-password').value;
+  const hash = await sha256Hex(input);
+  if(hash === GATE_HASH){
+    localStorage.setItem(GATE_STORAGE_KEY, 'true');
+    showDashboard();
+  } else {
+    document.getElementById('gate-error').textContent = 'Wrong password.';
+  }
+});
+
+document.getElementById('lock-again').addEventListener('click', function(){
+  localStorage.removeItem(GATE_STORAGE_KEY);
+  document.getElementById('dashboard-content').classList.remove('unlocked');
+  document.getElementById('lock-again').style.display = 'none';
+  document.getElementById('gate').style.display = 'flex';
+  document.getElementById('gate-password').value = '';
+});
+
+if(localStorage.getItem(GATE_STORAGE_KEY) === 'true'){
+  showDashboard();
+}
+
+// ---- dashboard app ----
+const STORAGE_KEY = 'sageArtistDashboardEntries';
+const FIELDS = [
+  {key:'month', label:'Month'},
+  {key:'songsWritten', label:'Songs Written', numeric:true},
+  {key:'songsFinished', label:'Songs Finished', numeric:true},
+  {key:'livePerformances', label:'Live Performances', numeric:true},
+  {key:'guitarHours', label:'Guitar Practice Hours', numeric:true},
+  {key:'writingHours', label:'Writing Hours', numeric:true},
+  {key:'danceClasses', label:'Dance Classes Attended', numeric:true},
+  {key:'coversLearned', label:'Covers Learned', numeric:true},
+  {key:'recordingSessions', label:'Recording Sessions Completed', numeric:true},
+  {key:'collaborations', label:'Collaborations', numeric:true},
+  {key:'youtubeUploads', label:'YouTube Uploads', numeric:true},
+  {key:'tiktokUploads', label:'TikTok Uploads', numeric:true},
+  {key:'favoriteLyric', label:'Favorite Lyric This Month'},
+  {key:'oneImprovement', label:'One Thing I Improved'}
+];
+const NUMERIC_FIELDS = FIELDS.filter(f=>f.numeric);
+
+function loadEntries(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+  }catch(e){ return []; }
+}
+function saveEntries(entries){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+}
+function monthLabel(m){
+  if(!m) return '';
+  const [y,mo] = m.split('-');
+  const d = new Date(parseInt(y), parseInt(mo)-1, 1);
+  return d.toLocaleString('default',{month:'short', year:'numeric'});
+}
+
+let entries = loadEntries();
+let chartMain, chartUploads;
+
+const form = document.getElementById('entry-form');
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const month = document.getElementById('month').value;
+  if(!month){ alert('Pick a month first.'); return; }
+  const entry = { timestamp: new Date().toISOString(), month };
+  NUMERIC_FIELDS.forEach(f=>{
+    entry[f.key] = parseFloat(document.getElementById(f.key).value) || 0;
+  });
+  entry.favoriteLyric = document.getElementById('favoriteLyric').value.trim();
+  entry.oneImprovement = document.getElementById('oneImprovement').value.trim();
+
+  const existingIdx = entries.findIndex(x=>x.month === month);
+  if(existingIdx >= 0){
+    entries[existingIdx] = entry;
+  } else {
+    entries.push(entry);
+  }
+  entries.sort((a,b)=> a.month.localeCompare(b.month));
+  saveEntries(entries);
+  render();
+  form.reset();
+  document.getElementById('month').value = month;
+});
+
+document.getElementById('clear-form').addEventListener('click', ()=> form.reset());
+
+function deleteEntry(month){
+  if(!confirm('Delete entry for '+monthLabel(month)+'?')) return;
+  entries = entries.filter(x=>x.month !== month);
+  saveEntries(entries);
+  render();
+}
+
+function renderTable(){
+  const tbody = document.querySelector('#history-table tbody');
+  tbody.innerHTML = '';
+  document.getElementById('history-empty').style.display = entries.length ? 'none' : 'block';
+  entries.slice().reverse().forEach(e=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${monthLabel(e.month)}</td>
+      <td>${e.songsWritten}</td><td>${e.songsFinished}</td><td>${e.livePerformances}</td>
+      <td>${e.guitarHours}</td><td>${e.writingHours}</td><td>${e.danceClasses}</td>
+      <td>${e.coversLearned}</td><td>${e.recordingSessions}</td><td>${e.collaborations}</td>
+      <td>${e.youtubeUploads}</td><td>${e.tiktokUploads}</td>
+      <td><button class="btn-danger" data-month="${e.month}">Delete</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  tbody.querySelectorAll('button[data-month]').forEach(btn=>{
+    btn.addEventListener('click', ()=> deleteEntry(btn.dataset.month));
+  });
+}
+
+function renderJournal(){
+  const el = document.getElementById('journal');
+  const withNotes = entries.slice().reverse().filter(e=> e.favoriteLyric || e.oneImprovement);
+  if(!withNotes.length){
+    el.innerHTML = '<p class="empty">Your favorite lyrics and monthly wins will show up here.</p>';
+    return;
+  }
+  el.innerHTML = withNotes.map(e=>`
+    <div class="journal-card">
+      <div class="month">${monthLabel(e.month)}</div>
+      ${e.favoriteLyric ? `<div class="lyric">"${e.favoriteLyric}"</div>` : ''}
+      ${e.oneImprovement ? `<div class="improved">✦ Improved: ${e.oneImprovement}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function populateMetricPickers(){
+  const m1 = document.getElementById('metric1');
+  const m2 = document.getElementById('metric2');
+  [m1,m2].forEach(sel=> sel.innerHTML = NUMERIC_FIELDS.map(f=>`<option value="${f.key}">${f.label}</option>`).join(''));
+  m1.value = 'songsWritten';
+  m2.value = 'guitarHours';
+}
+
+function renderCharts(){
+  const empty = document.getElementById('chart-empty');
+  const canvases = document.querySelectorAll('.charts');
+  if(entries.length < 2){
+    empty.style.display = 'block';
+    canvases.forEach(c=>c.style.display='none');
+    return;
+  }
+  empty.style.display = 'none';
+  canvases.forEach(c=>c.style.display='');
+
+  const labels = entries.map(e=>monthLabel(e.month));
+  const m1key = document.getElementById('metric1').value;
+  const m2key = document.getElementById('metric2').value;
+  const m1 = NUMERIC_FIELDS.find(f=>f.key===m1key);
+  const m2 = NUMERIC_FIELDS.find(f=>f.key===m2key);
+
+  if(chartMain) chartMain.destroy();
+  chartMain = new Chart(document.getElementById('chartMain'), {
+    type:'line',
+    data:{ labels, datasets:[
+      { label:m1.label, data: entries.map(e=>e[m1key]), borderColor:'#c4703f', backgroundColor:'#c4703f33', tension:0.3, fill:true },
+      { label:m2.label, data: entries.map(e=>e[m2key]), borderColor:'#8a9b7e', backgroundColor:'#8a9b7e33', tension:0.3, fill:true }
+    ]},
+    options:{ responsive:true, plugins:{legend:{position:'bottom'}} }
+  });
+
+  if(chartUploads) chartUploads.destroy();
+  chartUploads = new Chart(document.getElementById('chartUploads'), {
+    type:'bar',
+    data:{ labels, datasets:[
+      { label:'YouTube Uploads', data: entries.map(e=>e.youtubeUploads), backgroundColor:'#d9a441' },
+      { label:'TikTok Uploads', data: entries.map(e=>e.tiktokUploads), backgroundColor:'#c76b6b' }
+    ]},
+    options:{ responsive:true, plugins:{legend:{position:'bottom'}}, scales:{y:{beginAtZero:true, ticks:{stepSize:1}}} }
+  });
+}
+
+function render(){
+  renderTable();
+  renderJournal();
+  renderCharts();
+}
+
+document.getElementById('metric1').addEventListener('change', renderCharts);
+document.getElementById('metric2').addEventListener('change', renderCharts);
+
+document.getElementById('export-csv').addEventListener('click', ()=>{
+  const headers = ['Timestamp','Month','Songs Written','Songs Finished','Live Performances','Guitar Practice Hours','Writing Hours','Dance Classes Attended','Covers Learned','Recording Sessions Completed','Collaborations','YouTube Uploads','TikTok Uploads','Favorite Lyric This Month','One Thing I Improved'];
+  const rows = entries.map(e=>[
+    e.timestamp, e.month, e.songsWritten, e.songsFinished, e.livePerformances, e.guitarHours, e.writingHours,
+    e.danceClasses, e.coversLearned, e.recordingSessions, e.collaborations, e.youtubeUploads, e.tiktokUploads,
+    '"'+(e.favoriteLyric||'').replace(/"/g,'""')+'"', '"'+(e.oneImprovement||'').replace(/"/g,'""')+'"'
+  ]);
+  const csv = [headers.join(','), ...rows.map(r=>r.join(','))].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sage-artist-dashboard.csv';
+  a.click();
+});
+
+document.getElementById('import-csv').addEventListener('click', ()=> document.getElementById('import-file').click());
+document.getElementById('import-file').addEventListener('change', function(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt){
+    const text = evt.target.result;
+    const lines = text.split(/\r?\n/).filter(l=>l.trim().length);
+    lines.shift(); // header
+    const imported = lines.map(line=>{
+      const cols = line.match(/(".*?"|[^,]+)(?=,|$)/g).map(c=>c.replace(/^"|"$/g,'').replace(/""/g,'"'));
+      return {
+        timestamp: cols[0], month: cols[1],
+        songsWritten: parseFloat(cols[2])||0, songsFinished: parseFloat(cols[3])||0,
+        livePerformances: parseFloat(cols[4])||0, guitarHours: parseFloat(cols[5])||0,
+        writingHours: parseFloat(cols[6])||0, danceClasses: parseFloat(cols[7])||0,
+        coversLearned: parseFloat(cols[8])||0, recordingSessions: parseFloat(cols[9])||0,
+        collaborations: parseFloat(cols[10])||0, youtubeUploads: parseFloat(cols[11])||0,
+        tiktokUploads: parseFloat(cols[12])||0, favoriteLyric: cols[13]||'', oneImprovement: cols[14]||''
+      };
+    });
+    imported.forEach(imp=>{
+      const idx = entries.findIndex(x=>x.month===imp.month);
+      if(idx>=0) entries[idx]=imp; else entries.push(imp);
+    });
+    entries.sort((a,b)=>a.month.localeCompare(b.month));
+    saveEntries(entries);
+    render();
+    alert('Imported '+imported.length+' month(s).');
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+// init
+populateMetricPickers();
+document.getElementById('month').value = new Date().toISOString().slice(0,7);
+render();
+</script>
+</body>
+</html>
